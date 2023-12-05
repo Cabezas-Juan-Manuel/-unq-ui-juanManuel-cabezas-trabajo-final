@@ -1,0 +1,24 @@
+html, body, #root {
+    background-color: blue;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Añade display flex para usar flexbox */
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: gray;
+    display: flex; /* Añade display flex para usar flexbox */
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20%;
+    width: 50%;
+    border: 10px solid black; /* Ajusta el grosor del borde aquí */
+}
+
+.input-nickName {
+    width: 90%;
+    margin-bottom: 250px; /* Añade 'px' aquí para indicar píxeles */
+}
