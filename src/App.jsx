@@ -11,7 +11,7 @@ function App() {
         <Routes>
 
           <Route exact path="/" element={<Lobby />} />
-          <Route exact path="/gameScreen" element={<GameScreen />} />          
+          <Route exact path="/gameScreen/:nickname" element={<GameScreen />} />          
         </Routes>
       </BrowserRouter> 
     </>

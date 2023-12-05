@@ -6,8 +6,7 @@ function ButtonStartGame({ nickname }) {
   const navigate = useNavigate();
 
   const handleStartGame = () => {
-    // Navegar a /gameScreen y pasar nickname como parámetro
-    navigate(`/gameScreen?nickname=${nickname}`);
+    navigate(`/gameScreen/${nickname}`);
   };
 
   return (
