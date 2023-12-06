@@ -1,0 +1,23 @@
+.battle-field {
+    display: inline-table;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 5px;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .cell {
+    background-color: white;
+    width: 30px; /* Ajuste el ancho según tus necesidades */
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ship {
+    background-color: #3498db; /* Color de fondo para celdas con barcos */
+  }
