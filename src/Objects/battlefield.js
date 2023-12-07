@@ -17,7 +17,9 @@ export class BattleField {
     }
   }
 
-  placeShip(startRow, startColumn, orientation, length) {
+  placeShip(startRow, startColumn, orientation, ship) {
+    const length = ship.length;
+
     for (let i = 0; i < length; i++) {
       let row = startRow;
       let column = startColumn;
@@ -34,6 +36,9 @@ export class BattleField {
         row > 0 && column > 0
       ) {
         this.board[row][column].ship = true;
+        this.board[row][column].shipInfo = ship; // Guardar información del barco en la celda
+        let shipCoordinates = this.board[row][column].coordinates
+        ship.coordinates.push({coordinates: shipCoordinates, hit: false});
         console.log(`Barco colocado en la coordenada: ${this.board[row][column].coordinates}`);
       } else {
         console.log('Coordenadas fuera del rango del tablero o en la primera fila/columna.');
