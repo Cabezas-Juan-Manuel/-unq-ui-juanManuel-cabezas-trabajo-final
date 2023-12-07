@@ -1,36 +1,28 @@
-import React from 'react';
-import './Styles/shipSelectionBoard.css';
-import { Ship } from '../Objects/ship';
+import React from "react";
+import "./Styles/shipSelectionBoard.css";
+import { Ship } from "../Objects/ship";
 
-function ShipSelectionBoard() {
-    const carrier = new Ship(5)
-    const crusier = new Ship(4)
-    const submarine = new Ship(3)
-    const boat = new Ship(2)
-
-    const onSelectShip = (ship) =>{
-
-    }
+function ShipSelectionBoard({ onSelectShip }) {
+  const carrier = new Ship(5);
+  const crusier = new Ship(4);
+  const submarine = new Ship(3);
+  const boat = new Ship(2);
 
   return (
     <>
-      <div className='a'>
-      <div  className = "ships-name-container">  
-      <h4 className='ship-name'>CARRIER</h4>
-      <h4 className='ship-name'>CRUSIER</h4>
-      <h4 className='ship-name'>SUBMARINE</h4>
-      <h4 className='ship-name'>BOAT</h4>
-      </div> 
-      <div className='ships-container'>
-        
-        <img src="../../public/carrier.jpg" alt="carrier image"  className='ship-image' />
-        
-        <img src="../../public/crusier.jpg" alt="crusier image" className='ship-image'/>
-        
-        <img src="../../public/submarine.jpg" alt="submarine image" className='ship-image'/>
-        
-        <img src="../../public/boat.jpg" alt="boat image"className='ship-image hover-cursor' /> 
-      </div>  
+      <div className="a">
+        <div className="ships-name-container">
+          <h4 className="ship-name">CARRIER</h4>
+          <h4 className="ship-name">CRUISER</h4>
+          <h4 className="ship-name">SUBMARINE</h4>
+          <h4 className="ship-name">BOAT</h4>
+        </div>
+        <div className="ships-container">
+          <img src="../../public/carrier.jpg" alt="carrier image" className="ship-image" onClick={() => onSelectShip(carrier)} />
+          <img src="../../public/crusier.jpg" alt="cruiser image" className="ship-image" onClick={() => onSelectShip(crusier)} />
+          <img src="../../public/submarine.jpg" alt="submarine image" className="ship-image" onClick={() => onSelectShip(submarine)} />
+          <img src="../../public/boat.jpg" alt="boat image" className="ship-image hover-cursor" onClick={() => onSelectShip(boat)} />
+        </div>
       </div>
     </>
   );
