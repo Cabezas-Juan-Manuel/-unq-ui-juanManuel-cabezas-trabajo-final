@@ -54,13 +54,12 @@ export class BattleField {
       let row = startRow;
       let column = startColumn;
   
-      // Calculate the current position based on orientation and iteration
       if (startRow === endRow) {
-        // Horizontal placement
         column += i;
+        console.log(column)
       } else if (startColumn === endColumn) {
-        // Vertical placement
         row += i;
+        console.log(row)
       }
   
       if (
@@ -68,7 +67,7 @@ export class BattleField {
         column >= 0 && column < this.board[0].length
       ) {
         this.board[row][column].ship = true;
-        this.board[row][column].shipInfo = ship; // Save ship information in the cell
+        this.board[row][column].shipInfo = ship; 
         let shipCoordinates = this.board[row][column].coordinates;
         ship.coordinates.push({ coordinates: shipCoordinates, hit: false });
         console.log(`Ship placed at coordinates: ${this.board[row][column].coordinates}`);
@@ -96,8 +95,8 @@ export class BattleField {
   }
 
   getValidCoordinatesRange() {
-    const numRows = this.board.length;
-    const numColumns = this.board[0].length;
+    const numRows = this.board.length - 1;
+    const numColumns = this.board[0].length - 1;
 
     const startCoordinate = this.board[0][0].coordinates;
     const endCoordinate = this.board[numRows - 1][numColumns - 1].coordinates;

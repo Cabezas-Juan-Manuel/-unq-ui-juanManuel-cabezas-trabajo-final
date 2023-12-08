@@ -34,46 +34,35 @@ function GameScreen() {
     let carrier = new Ship(5);
   
     const shipsToPlace = [boat, submarine, crusier, carrier];
-  
-    console.log(shipsToPlace);
-  
+    
     shipsToPlace.forEach((ship) => {
       let placed = false;
   
-      while (placed === false) {
-        try {
+      while (placed === false) {  
           const validCoordinatesRange = battlefield.getValidCoordinatesRange();
-  
-          // Obtén coordenadas aleatorias dentro del rango válido
-          const randomStartRow =
-            Math.floor(Math.random() * (validCoordinatesRange.endRow - validCoordinatesRange.startRow + 1)) +
-            validCoordinatesRange.startRow;
-          const randomStartColumn =
-            Math.floor(Math.random() * (battlefield.columns - 1)) + 1;
-  
-          const shipLength = ship.length;
-  
-          // Calcula las coordenadas de finalización basándote en la longitud del barco
-          const randomEndRow = randomStartRow + (Math.random() > 0.5 ? shipLength - 1 : 0);
-          const randomEndColumn = randomStartColumn + (Math.random() <= 0.5 ? shipLength - 1 : 0);
-           
-          
-          console.log(randomStartRow)
-          //console.log(randomStarColumn)
-          // Intenta colocar el barco
-          battlefield.placeShip(
-            randomStartRow,
-            randomStartColumn,
-            randomEndRow,
-            randomEndColumn,
-            ship
-          );
-  
-          // Si no hay excepciones, el barco se colocó correctamente
-          placed = true;
-        } catch (error) {
-          // Si hay excepciones, el lugar está ocupado y se intenta de nuevo
-        }
+
+          const ValidstartRow = validCoordinatesRange.startCoordinate.toUpperCase().charCodeAt(0) - 65 +1;
+          const ValidstartColumn = parseInt(validCoordinatesRange.startCoordinate.slice(1), 10) - 1 + 1;
+          const ValidendRow = validCoordinatesRange.endCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+          const ValidendColumn = parseInt(validCoordinatesRange.endCoordinate.slice(1), 10) - 1 + 1;
+
+          const randomStartRow = Math.floor(Math.random() * (ValidendRow - ValidstartRow + 1)) + ValidstartRow;
+          const randomStartColumn = Math.floor(Math.random() * (ValidendColumn - ValidstartColumn + 1)) + ValidstartColumn;
+          const randomEndRow = Math.floor(Math.random() * (ValidendRow - ValidstartRow + 1)) + ValidstartRow;
+          const randomEndColumn = Math.floor(Math.random() * (ValidendColumn - ValidstartColumn + 1)) + ValidstartColumn;
+                
+
+          if(!battlefield.areCellsOccupied(randomStartRow, randomStartColumn, randomEndRow, randomEndColumn)){
+            battlefield.placeShip(
+              randomStartRow,
+              randomStartColumn,
+              randomEndRow,
+              randomEndColumn,
+              ship
+            ); 
+            placed = true;
+          }
+                    
       }
     });
   };
