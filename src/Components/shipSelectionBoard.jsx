@@ -12,10 +12,10 @@ function ShipSelectionBoard({ onSelectShip }) {
     <>
       <div className="a">
         <div className="ships-name-container">
-          <h4 className="ship-name">CARRIER</h4>
-          <h4 className="ship-name">CRUISER</h4>
-          <h4 className="ship-name">SUBMARINE</h4>
-          <h4 className="ship-name">BOAT</h4>
+          <h4 className="ship-name">CARRIER(5)</h4>
+          <h4 className="ship-name">CRUISER(4)</h4>
+          <h4 className="ship-name">SUBMARINE(3)</h4>
+          <h4 className="ship-name">BOAT(2)</h4>
         </div>
         <div className="ships-container">
           <img src="../../public/carrier.jpg" alt="carrier image" className="ship-image" onClick={() => onSelectShip(carrier)} />

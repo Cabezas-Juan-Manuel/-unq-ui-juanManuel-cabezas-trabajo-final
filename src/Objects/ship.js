@@ -8,7 +8,7 @@ export class Ship {
         this.sink = true
     }
 
-    takeHit(){
+    takeAHit(){
             
     }
     

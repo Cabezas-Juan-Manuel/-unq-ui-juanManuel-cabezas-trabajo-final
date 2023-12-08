@@ -2,8 +2,6 @@
 html, body, #root {
     background-color: #3c4c9b;
     display: flex;
-    height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
     justify-content: center;

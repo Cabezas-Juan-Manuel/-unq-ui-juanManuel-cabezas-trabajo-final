@@ -3,6 +3,8 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Lobby from './Views/lobby//lobby.jsx';
 import GameScreen from './Views/gameScreen/gameScreen.jsx';
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -14,6 +16,15 @@ function App() {
           <Route exact path="/gameScreen/:nickname" element={<GameScreen />} />          
         </Routes>
       </BrowserRouter> 
+      <ToastContainer position="top-right"
+                            autoClose={3000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            draggable
+                            theme="dark"
+                            style={{whiteSpace: "pre-line"}}/>
     </>
   );
 }
