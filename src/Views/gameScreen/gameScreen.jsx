@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 import "./gameScreen.css"
 import toastUtil from "../../utilities/toastUtil";
 import { Ship } from "../../Objects/ship";
+import CombatPlayerField from "../../Components/combatPlayerFiled";
 
 function GameScreen() {
 
@@ -23,7 +24,7 @@ function GameScreen() {
 
 
   const finishPlacementFase = () => {
-    if(placedShipsLength.length === 4){
+    if(placedShipsLength.length === 0){
       placeRandomShips(secondPlayerBattlefield);
       setPlacementFase(false);
     } else{
@@ -126,7 +127,7 @@ function GameScreen() {
     );
 
     if (distance >= selectedShip.length) {
-      toastUtil.toastError("Distance is shorter than ship length");
+      toastUtil.toastError("Distance exceeds ship length");
       return;
     }
 
@@ -142,7 +143,7 @@ function GameScreen() {
     console.log(distance)
 
     if(distance1 < selectedShip.length){
-       toastUtil.toastError("Distance not enough")
+       toastUtil.toastError("Distance is shorter than ship length")
        return;
     }
 
@@ -189,7 +190,7 @@ function GameScreen() {
       ) : (
         <> 
         <PlayerField battleField={firstPlayerBattlefield.board} />
-        <PlayerField battleField={secondPlayerBattlefield.board} />
+        <CombatPlayerField battleField={secondPlayerBattlefield.board} hidenIndo = {true} />
         </>
       )}
     </>
