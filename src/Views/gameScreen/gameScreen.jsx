@@ -23,8 +23,13 @@ function GameScreen() {
 
 
   const finishPlacementFase = () => {
-    placeRandomShips(secondPlayerBattlefield);
-    setPlacementFase(false);
+    if(placedShipsLength.length === 4){
+      placeRandomShips(secondPlayerBattlefield);
+      setPlacementFase(false);
+    } else{
+      toastUtil.toastError("Place all ships")
+    }
+    
   };
 
   const placeRandomShips = (battlefield) => {
@@ -34,39 +39,52 @@ function GameScreen() {
     let carrier = new Ship(5);
   
     const shipsToPlace = [boat, submarine, crusier, carrier];
-    
+  
     shipsToPlace.forEach((ship) => {
       let placed = false;
   
-      while (placed === false) {  
-          const validCoordinatesRange = battlefield.getValidCoordinatesRange();
-
-          const ValidstartRow = validCoordinatesRange.startCoordinate.toUpperCase().charCodeAt(0) - 65 +1;
-          const ValidstartColumn = parseInt(validCoordinatesRange.startCoordinate.slice(1), 10) - 1 + 1;
-          const ValidendRow = validCoordinatesRange.endCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
-          const ValidendColumn = parseInt(validCoordinatesRange.endCoordinate.slice(1), 10) - 1 + 1;
-
-          const randomStartRow = Math.floor(Math.random() * (ValidendRow - ValidstartRow + 1)) + ValidstartRow;
-          const randomStartColumn = Math.floor(Math.random() * (ValidendColumn - ValidstartColumn + 1)) + ValidstartColumn;
-          const randomEndRow = Math.floor(Math.random() * (ValidendRow - ValidstartRow + 1)) + ValidstartRow;
-          const randomEndColumn = Math.floor(Math.random() * (ValidendColumn - ValidstartColumn + 1)) + ValidstartColumn;
-                
-
-          if(!battlefield.areCellsOccupied(randomStartRow, randomStartColumn, randomEndRow, randomEndColumn)){
-            battlefield.placeShip(
-              randomStartRow,
-              randomStartColumn,
-              randomEndRow,
-              randomEndColumn,
-              ship
-            ); 
-            placed = true;
-          }
-                    
+      while (placed === false) {
+        const validCoordinatesRange = battlefield.getValidCoordinatesRange();
+  
+        const ValidstartRow = validCoordinatesRange.startCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+        const ValidstartColumn = parseInt(validCoordinatesRange.startCoordinate.slice(1), 10);
+        const ValidendRow = validCoordinatesRange.endCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+        const ValidendColumn = parseInt(validCoordinatesRange.endCoordinate.slice(1), 10);
+  
+        const randomStartRow = Math.floor(Math.random() * (ValidendRow - ValidstartRow + 1)) + ValidstartRow;
+        const randomStartColumn = Math.floor(Math.random() * (ValidendColumn - ValidstartColumn + 1)) + ValidstartColumn;
+  
+        // Determinar la orientación aleatoria: 0 para horizontal, 1 para vertical
+        const randomOrientation = Math.floor(Math.random() * 2);
+  
+        let randomEndRow, randomEndColumn;
+  
+        if (randomOrientation === 0) {
+          // Orientación horizontal
+          randomEndRow = randomStartRow;
+          randomEndColumn = randomStartColumn + ship.length - 1;
+        } else {
+          // Orientación vertical
+          randomEndRow = randomStartRow + ship.length - 1;
+          randomEndColumn = randomStartColumn;
+        }
+  
+        console.log(`Placing ship ${ship.name} with length ${ship.length} from (${randomStartRow}, ${randomStartColumn}) to (${randomEndRow}, ${randomEndColumn}):`);
+  
+        if (!battlefield.areCoordinatesOutOfRange(randomStartRow, randomStartColumn, randomEndRow, randomEndColumn) && 
+             !battlefield.areCellsOccupied(randomStartRow, randomStartColumn, randomEndRow, randomEndColumn)) {
+          battlefield.placeShip(
+            randomStartRow,
+            randomStartColumn,
+            randomEndRow,
+            randomEndColumn,
+            ship
+          );
+          placed = true;
+        }
       }
     });
   };
-
   
 
   const handleFormSubmit = (e) => {
@@ -108,7 +126,7 @@ function GameScreen() {
     );
 
     if (distance >= selectedShip.length) {
-      toastUtil.toastError("Distance exceeds ship length");
+      toastUtil.toastError("Distance is shorter than ship length");
       return;
     }
 
@@ -116,10 +134,23 @@ function GameScreen() {
          toastUtil.toastError("Coordinates are occupied")  
          return;    
     }
+
+    const distance1 = Math.abs(adjustedEndRow - adjustedStartRow) + Math.abs(adjustedEndColumn - adjustedStartColumn) + 1;
+
+
+    console.log(distance1)
+    console.log(distance)
+
+    if(distance1 < selectedShip.length){
+       toastUtil.toastError("Distance not enough")
+       return;
+    }
+
   
     firstPlayerBattlefield.placeShip(adjustedStartRow, adjustedStartColumn, adjustedEndRow, adjustedEndColumn, selectedShip);
   
     setPlacedShipsLength(prevLengths => [...prevLengths, selectedShip.length]);
+    setStartCoordinate('')
     setEndCoordinate('');
     setSelectedShip(null);
 };
@@ -137,7 +168,7 @@ function GameScreen() {
             <input
               type="text"
               value={startCoordinate}
-              placeholder="A,1"
+              placeholder="A1"
               onChange={(e) => setStartCoordinate(e.target.value)}
             />
             </label>
@@ -146,7 +177,7 @@ function GameScreen() {
                 <input
                 type="text"
                 value={endCoordinate}
-                placeholder="A,2"
+                placeholder="A2"
                 onChange={(e) => setEndCoordinate(e.target.value)}
                 />
             </label>
@@ -156,7 +187,7 @@ function GameScreen() {
           <Button onClick={finishPlacementFase}>BATTLE!</Button>
         </>
       ) : (
-        <>
+        <> 
         <PlayerField battleField={firstPlayerBattlefield.board} />
         <PlayerField battleField={secondPlayerBattlefield.board} />
         </>

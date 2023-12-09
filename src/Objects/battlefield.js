@@ -50,16 +50,16 @@ export class BattleField {
   placeShip(startRow, startColumn, endRow, endColumn, ship) {
     const length = ship.length;
   
+    console.log(`Placing ship ${ship.name} with length ${length} from (${startRow}, ${startColumn}) to (${endRow}, ${endColumn}):`);
+  
     for (let i = 0; i < length; i++) {
       let row = startRow;
       let column = startColumn;
   
       if (startRow === endRow) {
         column += i;
-        console.log(column)
       } else if (startColumn === endColumn) {
         row += i;
-        console.log(row)
       }
   
       if (
@@ -70,9 +70,17 @@ export class BattleField {
         this.board[row][column].shipInfo = ship; 
         let shipCoordinates = this.board[row][column].coordinates;
         ship.coordinates.push({ coordinates: shipCoordinates, hit: false });
-        console.log(`Ship placed at coordinates: ${this.board[row][column].coordinates}`);
+        console.log(`  Ship placed at coordinates: ${this.board[row][column].coordinates}`);
       } else {
-        console.log('Coordinates outside the range of the board.');
+        console.log('  Coordinates outside the range of the board.');
+      }
+    }
+  
+    // Log the state of cells after placing the ship
+    console.log('Board state after placing the ship:');
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[0].length; j++) {
+        console.log(`  Cell at ${this.board[i][j].coordinates} has ship: ${this.board[i][j].ship}`);
       }
     }
   }
