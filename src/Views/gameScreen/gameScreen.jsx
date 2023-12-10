@@ -240,9 +240,11 @@ function GameScreen() {
     <>
       {placementFase ? (
         <>
-          <h1>CHOOSE A SHIP</h1>
-          <ShipSelectionBoard onSelectShip={(ship) => setSelectedShip(ship)} />
-          <h1>SET COORDINATES</h1>
+          <h1 className="text-title">SELECT A SHIP</h1>
+          <div className="selection-board">
+            <ShipSelectionBoard onSelectShip={(ship) => setSelectedShip(ship)} />
+          </div>
+          <h1 className="text-title">SET COORDINATES</h1>
           <form onSubmit={handleFormSubmit}>
             <label>
             Start Coordinate:
