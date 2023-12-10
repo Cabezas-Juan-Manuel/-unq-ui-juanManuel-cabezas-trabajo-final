@@ -8,14 +8,18 @@ import "./gameScreen.css"
 import toastUtil from "../../utilities/toastUtil";
 import { Ship } from "../../Objects/ship";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
+import { Player } from "../../Objects/player";
 
 function GameScreen() {
 
 
   const { nickname } = useParams();
 
-  const [firstPlayerBattlefield, setfirstPlayerBattlefield] = useState(new BattleField(11, 11, 1));
-  const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11, 2));
+  const [playerOne, setPlayerOne] = useState(new Player(nickname, 1));
+  const [playerTwo, setplayerTwo] = useState(new Player("cpu", 2));
+
+  const [firstPlayerBattlefield, setfirstPlayerBattlefield] = useState(new BattleField(11, 11, playerOne));
+  const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11, playerTwo));
 
   const [placementFase, setPlacementFase] = useState(true);
   const [selectedShip, setSelectedShip] = useState(null);
@@ -24,6 +28,8 @@ function GameScreen() {
   const [endCoordinate, setEndCoordinate] = useState('');
   
   const [placedShipsLength, setPlacedShipsLength] = useState([]);
+
+  const playerTurn = playerOne
 
 
   const finishPlacementFase = () => {
@@ -162,7 +168,11 @@ function GameScreen() {
     const accurateRowIndex = rowIndex + 1;
     const accurateColumnIndex = columnIndex + 1;
 
-    if(playerBattlefield.user == 1){
+    console.log(playerBattlefield.user)
+    console.log(firstPlayerBattlefield)
+    console.log(secondPlayerBattlefield)
+
+    if(playerBattlefield.user.numberOfUser == 1){
       setfirstPlayerBattlefield(prevBattlefield => {
         if (!prevBattlefield) {
           console.error("Error: Battlefield is undefined");
@@ -198,8 +208,9 @@ function GameScreen() {
     console.log("secondPlayerBattlefield:", secondPlayerBattlefield);
   }, [secondPlayerBattlefield]);
 
-  
+  console.log(playerTwo.isOutOfCombat)
 
+  
 
   return (
     <>

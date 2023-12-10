@@ -50,6 +50,8 @@ export class BattleField {
 
   placeShip(startRow, startColumn, endRow, endColumn, ship) {
     const length = ship.length;
+    this.user.fleet.push(ship)
+    console.log(this.user.fleet)
     
     for (let i = 0; i < length; i++) {
       let row = startRow;
@@ -67,8 +69,8 @@ export class BattleField {
       ) {
         this.board[row][column].ship = true;
         this.board[row][column].shipInfo = ship; 
-        let shipCoordinates = this.board[row][column].coordinates;
-        ship.coordinates.push({ coordinates: shipCoordinates, hit: false });
+        let shipCoordinates = { row, column };
+        ship.coordinates.push(shipCoordinates);
         console.log(`  Ship placed at coordinates: ${this.board[row][column].coordinates}`);
       } else {
         console.log('  Coordinates outside the range of the board.');
@@ -78,18 +80,24 @@ export class BattleField {
   }
 
   receiveHit(row, column) {
+    console.log(this.user.isOutOfCombat)
     if (
       row >= 0 && row < this.board.length &&
       column >= 0 && column < this.board[0].length
     ) {
       if (this.board[row][column].ship) {
         console.log(`¡Barco alcanzado en la coordenada: ${this.board[row][column].coordinates}!`);
+        this.board[row][column].shipInfo.takeAHit(row, column) 
+        if(this.board[row][column].shipInfo.isSunk){
+          this.user.shipSunk(this.board[row][column].shipInfo)
+        }
       } else {
         console.log(`Agua en la coordenada: ${this.board[row][column].coordinates}`);
       }
-  
+      
+      
       this.board[row][column].hit = true;
-      console.log(this.board[row][column].hit);
+      console.log(this.board[row][column].hit);    
   
       return this;
     } else {
@@ -116,8 +124,9 @@ export class BattleField {
     const clonedBattleField = new BattleField(0, 0);
   
     clonedBattleField.board = this.board.map(row => row.map(cell => ({ ...cell })));
-  
-   
+
+    clonedBattleField.user = this.user;
+
   
     return clonedBattleField;
   }
