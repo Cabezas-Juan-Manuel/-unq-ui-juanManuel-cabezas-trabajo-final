@@ -1,0 +1,39 @@
+.battle-field {
+    display: inline-table;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 5px;
+    margin-bottom: 2%;
+    margin-top: 0;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .cell {
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease; /* Transición suave del cambio de color */
+  }
+  
+  .cell:hover {
+    background-color: lightblue; /* Cambio de color al pasar el mouse */
+  }
+  
+  .ship {
+    background-color: grey;
+  }
+  
+  .Shiphit {
+    background-color: #e74c3c;
+  }
+  
+  .Waterhit {
+    background-color: #ecf0f1;
+  }
+  

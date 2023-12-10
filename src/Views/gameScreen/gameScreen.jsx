@@ -189,8 +189,8 @@ function GameScreen() {
         </>
       ) : (
         <> 
-        <PlayerField battleField={firstPlayerBattlefield.board} />
-        <CombatPlayerField battleField={secondPlayerBattlefield.board} hidenIndo = {true} />
+        <CombatPlayerField battleField={firstPlayerBattlefield.board} hiddenInfo = {false} field = {firstPlayerBattlefield}/>
+        <CombatPlayerField battleField={secondPlayerBattlefield.board} hiddenInfo = {false} field = {secondPlayerBattlefield}/>
         </>
       )}
     </>

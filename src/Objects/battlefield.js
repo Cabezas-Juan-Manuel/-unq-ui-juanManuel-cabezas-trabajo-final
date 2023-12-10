@@ -97,6 +97,7 @@ export class BattleField {
       }
 
       this.board[row][column].hit = true;
+      console.log(this.board[row][column].hit)
     } else {
       console.log('Coordenadas fuera del rango del tablero.');
     }
