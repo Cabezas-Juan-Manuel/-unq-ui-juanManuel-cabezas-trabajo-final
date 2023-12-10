@@ -1,5 +1,4 @@
 .battle-field {
-    display: inline-table;
     grid-template-columns: repeat(11, 1fr);
     gap: 5px;
     margin-bottom: 2%;
@@ -28,12 +27,12 @@
   .ship {
     background-color: grey;
   }
+    
+  .Waterhit {
+    background-color: blue;
+  }
   
   .Shiphit {
-    background-color: #e74c3c;
+    background-color: red !important;
+    color: red !important; /* Use a contrasting color for visibility */
   }
-  
-  .Waterhit {
-    background-color: #ecf0f1;
-  }
-  

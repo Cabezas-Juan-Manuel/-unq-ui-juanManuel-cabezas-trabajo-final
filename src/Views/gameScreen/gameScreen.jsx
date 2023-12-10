@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import { useParams } from "react-router-dom";
 import { BattleField } from "../../Objects/battlefield";
 import PlayerField from "../../Components/playerField";
@@ -14,12 +14,15 @@ function GameScreen() {
 
   const { nickname } = useParams();
 
-  const [firstPlayerBattlefield, setfirstPlayerBattlefield] = useState(new BattleField(11, 11));
-  const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11));
+  const [firstPlayerBattlefield, setfirstPlayerBattlefield] = useState(new BattleField(11, 11, 1));
+  const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11, 2));
+
   const [placementFase, setPlacementFase] = useState(true);
   const [selectedShip, setSelectedShip] = useState(null);
+  
   const [startCoordinate, setStartCoordinate] = useState('');
   const [endCoordinate, setEndCoordinate] = useState('');
+  
   const [placedShipsLength, setPlacedShipsLength] = useState([]);
 
 
@@ -32,6 +35,7 @@ function GameScreen() {
     }
     
   };
+
 
   const placeRandomShips = (battlefield) => {
     let boat = new Ship(2);
@@ -69,9 +73,7 @@ function GameScreen() {
           randomEndRow = randomStartRow + ship.length - 1;
           randomEndColumn = randomStartColumn;
         }
-  
-        console.log(`Placing ship ${ship.name} with length ${ship.length} from (${randomStartRow}, ${randomStartColumn}) to (${randomEndRow}, ${randomEndColumn}):`);
-  
+    
         if (!battlefield.areCoordinatesOutOfRange(randomStartRow, randomStartColumn, randomEndRow, randomEndColumn) && 
              !battlefield.areCellsOccupied(randomStartRow, randomStartColumn, randomEndRow, randomEndColumn)) {
           battlefield.placeShip(
@@ -154,7 +156,50 @@ function GameScreen() {
     setStartCoordinate('')
     setEndCoordinate('');
     setSelectedShip(null);
-};
+  };
+
+  const handleCellClick = (rowIndex, columnIndex, playerBattlefield) => {
+    const accurateRowIndex = rowIndex + 1;
+    const accurateColumnIndex = columnIndex + 1;
+
+    if(playerBattlefield.user == 1){
+      setfirstPlayerBattlefield(prevBattlefield => {
+        if (!prevBattlefield) {
+          console.error("Error: Battlefield is undefined");
+          return prevBattlefield;
+        }
+      
+        const newBattlefield = prevBattlefield.clone();
+        newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
+      
+        console.log("After state update:", newBattlefield);
+        return newBattlefield;
+      });
+    } else{
+      setSecondPlayerBattlefield(prevBattlefield => {
+        if (!prevBattlefield) {
+          console.error("Error: Battlefield is undefined");
+          return prevBattlefield;
+        }
+      
+        const newBattlefield = prevBattlefield.clone();
+        newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
+      
+        console.log("After state update:", newBattlefield);
+        return newBattlefield;
+      });
+    }    
+  };
+  
+  
+
+
+  useEffect(() => {
+    console.log("secondPlayerBattlefield:", secondPlayerBattlefield);
+  }, [secondPlayerBattlefield]);
+
+  
+
 
   return (
     <>
@@ -189,12 +234,15 @@ function GameScreen() {
         </>
       ) : (
         <> 
-        <CombatPlayerField battleField={firstPlayerBattlefield.board} hiddenInfo = {false} field = {firstPlayerBattlefield}/>
-        <CombatPlayerField battleField={secondPlayerBattlefield.board} hiddenInfo = {false} field = {secondPlayerBattlefield}/>
+        <CombatPlayerField battleField={firstPlayerBattlefield.board} hiddenInfo = {false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)}/>
+        <CombatPlayerField battleField={secondPlayerBattlefield.board} hiddenInfo = {false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)}/>
         </>
       )}
     </>
   );
+
+
+ 
 }
 
 export default GameScreen;

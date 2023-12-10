@@ -1,5 +1,6 @@
 export class BattleField {
-  constructor(rows, columns) {
+  constructor(rows, columns, user) {
+    this.user = user;
     this.board = [];
 
     for (let i = 0; i < rows; i++) {
@@ -49,9 +50,7 @@ export class BattleField {
 
   placeShip(startRow, startColumn, endRow, endColumn, ship) {
     const length = ship.length;
-  
-    console.log(`Placing ship ${ship.name} with length ${length} from (${startRow}, ${startColumn}) to (${endRow}, ${endColumn}):`);
-  
+    
     for (let i = 0; i < length; i++) {
       let row = startRow;
       let column = startColumn;
@@ -76,13 +75,6 @@ export class BattleField {
       }
     }
   
-    // Log the state of cells after placing the ship
-    console.log('Board state after placing the ship:');
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[0].length; j++) {
-        console.log(`  Cell at ${this.board[i][j].coordinates} has ship: ${this.board[i][j].ship}`);
-      }
-    }
   }
 
   receiveHit(row, column) {
@@ -95,11 +87,15 @@ export class BattleField {
       } else {
         console.log(`Agua en la coordenada: ${this.board[row][column].coordinates}`);
       }
-
+  
       this.board[row][column].hit = true;
-      console.log(this.board[row][column].hit)
+      console.log(this.board[row][column].hit);
+  
+      return this;
     } else {
       console.log('Coordenadas fuera del rango del tablero.');
+    
+      return this;
     }
   }
 
@@ -114,5 +110,15 @@ export class BattleField {
       startCoordinate,
       endCoordinate,
     };
+  }
+
+  clone() {
+    const clonedBattleField = new BattleField(0, 0);
+  
+    clonedBattleField.board = this.board.map(row => row.map(cell => ({ ...cell })));
+  
+   
+  
+    return clonedBattleField;
   }
 }
