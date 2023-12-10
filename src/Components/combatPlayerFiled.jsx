@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import './Styles/combatPlayerField.css';
 
-function CombatPlayerField({ battleField, hiddenInfo, onCellClick}) {
-  
+function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {
+  console.log(player)
+  let isSamePlayer = player.numberOfUser == battleField.user.numberOfUser;
 
   const handleCellClick = (rowIndex, columnIndex) => {
-    
-    onCellClick(rowIndex, columnIndex);
+    if (!isSamePlayer) {
+      onCellClick(rowIndex, columnIndex);
+    }
   };
-  console.log(battleField)
+
 
   return (
     <div className="battle-field">
-      {battleField.slice(1).map((row, rowIndex) => (
+      {battleField.board.slice(1).map((row, rowIndex) => (
         <div key={rowIndex} className="row">
           {row.slice(1).map((cell, columnIndex) => (
             <div
               key={cell.coordinates}
               className={`cell ${getCellStyle(cell, hiddenInfo)}`}
               onClick={() => handleCellClick(rowIndex, columnIndex)}
+              // Deshabilitar clic y hover si es el jugador uno
+              style={{ pointerEvents: isSamePlayer ? 'none' : 'auto' }}
             >
               {/* Omitir las líneas que muestran las coordenadas */}
             </div>
@@ -44,5 +48,6 @@ function getCellStyle(cell, hiddenInfo) {
 }
 
 export default CombatPlayerField;
+
 
 

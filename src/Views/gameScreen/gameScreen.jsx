@@ -16,9 +16,9 @@ function GameScreen() {
   const { nickname } = useParams();
 
   const [playerOne, setPlayerOne] = useState(new Player(nickname, 1));
-  const [playerTwo, setplayerTwo] = useState(new Player("cpu", 2));
+  const [playerTwo, setplayerTwo] = useState(new Player("BOT", 2));
 
-  const [firstPlayerBattlefield, setfirstPlayerBattlefield] = useState(new BattleField(11, 11, playerOne));
+  const [firstPlayerBattlefield, setFirstPlayerBattlefield] = useState(new BattleField(11, 11, playerOne));
   const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11, playerTwo));
 
   const [placementFase, setPlacementFase] = useState(true);
@@ -29,11 +29,14 @@ function GameScreen() {
   
   const [placedShipsLength, setPlacedShipsLength] = useState([]);
 
-  const playerTurn = playerOne
+  const [playerTurn, setPlayerTurn] = useState(playerOne);
+
+  const [machineAttackedCoordinates, setMachineAttackedCoordinates] = useState(new Set());
 
 
   const finishPlacementFase = () => {
-    if(placedShipsLength.length === 0){
+    console.log(placedShipsLength.length)
+    if(placedShipsLength.length == 4){
       placeRandomShips(secondPlayerBattlefield);
       setPlacementFase(false);
     } else{
@@ -65,17 +68,17 @@ function GameScreen() {
         const randomStartRow = Math.floor(Math.random() * (ValidendRow - ValidstartRow + 1)) + ValidstartRow;
         const randomStartColumn = Math.floor(Math.random() * (ValidendColumn - ValidstartColumn + 1)) + ValidstartColumn;
   
-        // Determinar la orientación aleatoria: 0 para horizontal, 1 para vertical
+       
         const randomOrientation = Math.floor(Math.random() * 2);
   
         let randomEndRow, randomEndColumn;
   
         if (randomOrientation === 0) {
-          // Orientación horizontal
+          
           randomEndRow = randomStartRow;
           randomEndColumn = randomStartColumn + ship.length - 1;
         } else {
-          // Orientación vertical
+          
           randomEndRow = randomStartRow + ship.length - 1;
           randomEndColumn = randomStartColumn;
         }
@@ -147,9 +150,6 @@ function GameScreen() {
     const distance1 = Math.abs(adjustedEndRow - adjustedStartRow) + Math.abs(adjustedEndColumn - adjustedStartColumn) + 1;
 
 
-    console.log(distance1)
-    console.log(distance)
-
     if(distance1 < selectedShip.length){
        toastUtil.toastError("Distance is shorter than ship length")
        return;
@@ -168,38 +168,64 @@ function GameScreen() {
     const accurateRowIndex = rowIndex + 1;
     const accurateColumnIndex = columnIndex + 1;
 
-    console.log(playerBattlefield.user)
-    console.log(firstPlayerBattlefield)
-    console.log(secondPlayerBattlefield)
-
     if(playerBattlefield.user.numberOfUser == 1){
-      setfirstPlayerBattlefield(prevBattlefield => {
+      setFirstPlayerBattlefield(prevBattlefield => {
         if (!prevBattlefield) {
-          console.error("Error: Battlefield is undefined");
           return prevBattlefield;
         }
       
         const newBattlefield = prevBattlefield.clone();
         newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
-      
-        console.log("After state update:", newBattlefield);
+        setPlayerTurn(playerOne)
+        console.log(playerTurn)
         return newBattlefield;
       });
     } else{
       setSecondPlayerBattlefield(prevBattlefield => {
         if (!prevBattlefield) {
-          console.error("Error: Battlefield is undefined");
           return prevBattlefield;
         }
       
         const newBattlefield = prevBattlefield.clone();
         newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
-      
-        console.log("After state update:", newBattlefield);
+        setPlayerTurn(playerTwo)
         return newBattlefield;
       });
     }    
   };
+
+  const machinePlay = () => {
+    if (playerTurn.numberOfUser == 2) {
+      setFirstPlayerBattlefield((prevBattlefield) => {
+
+        const validCoordinatesRange = prevBattlefield.getValidCoordinatesRange();
+        const startRow = validCoordinatesRange.startCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+        const startColumn = parseInt(validCoordinatesRange.startCoordinate.slice(1), 10);
+        const endRow = validCoordinatesRange.endCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+        const endColumn = parseInt(validCoordinatesRange.endCoordinate.slice(1), 10);
+
+        let randomRow = 0
+        let randomColumn = 0
+
+        while (machineAttackedCoordinates.has(`${randomRow}-${randomColumn}`)) {
+           randomRow = Math.floor(Math.random() * (endRow - startRow + 1)) + startRow;
+           randomColumn = Math.floor(Math.random() * (endColumn - startColumn + 1)) + startColumn;
+        }
+  
+        // Registra las coordenadas atacadas
+        setMachineAttackedCoordinates((prevCoordinates) => new Set(prevCoordinates.add(`${randomRow}-${randomColumn}`)));
+
+        const newBattlefield = prevBattlefield.clone();
+        newBattlefield.receiveHit(randomRow, randomColumn);
+        setPlayerTurn(playerOne); 
+        return newBattlefield;
+      });
+    }
+  };
+  
+  useEffect(() => {
+    machinePlay();
+  }, [playerTurn]);
   
   
 
@@ -208,9 +234,7 @@ function GameScreen() {
     console.log("secondPlayerBattlefield:", secondPlayerBattlefield);
   }, [secondPlayerBattlefield]);
 
-  console.log(playerTwo.isOutOfCombat)
 
-  
 
   return (
     <>
@@ -244,15 +268,21 @@ function GameScreen() {
           <Button onClick={finishPlacementFase}>BATTLE!</Button>
         </>
       ) : (
-        <> 
-        <CombatPlayerField battleField={firstPlayerBattlefield.board} hiddenInfo = {false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)}/>
-        <CombatPlayerField battleField={secondPlayerBattlefield.board} hiddenInfo = {false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)}/>
+        <>
+          {playerOne.isOutOfCombat || playerTwo.isOutOfCombat ? (
+            <h1>Game Over</h1>
+          ) : (
+            <>
+              <h1>{playerOne.nickname.toUpperCase()}</h1>
+              <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
+              <h1>{playerTwo.nickname}</h1>
+              <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
+            </>
+          )}
         </>
       )}
     </>
   );
-
-
  
 }
 
