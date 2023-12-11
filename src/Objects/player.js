@@ -16,11 +16,10 @@ export class Player {
         // Find the index of the ship with the same length in the fleet
         const index = this.fleet.findIndex((s) => s.length === lengthToRemove);
         if (index !== -1) {
-          console.log(this.fleet)
-        
+          
           this.fleet.splice(index, 1);  
         }
-        if(this.fleet.length == 0){
+        if(this.fleet.length === 0){
             this.isOutOfCombat = true
         }
 

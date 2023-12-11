@@ -84,6 +84,7 @@ export class BattleField {
     ) {
       if (this.board[row][column].ship) {
         let ship  = this.board[row][column].shipInfo
+        console.log(`le pega a barco en: ${this.board[row][column].coordinates}`);
         ship.takeAHit(row, column) 
         if(ship.isSunk()){
           this.user.shipSunk(ship)

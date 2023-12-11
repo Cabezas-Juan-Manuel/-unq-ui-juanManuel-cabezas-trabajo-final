@@ -10,14 +10,21 @@ import { Ship } from "../../Objects/ship";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
 import CoordinateInput from "../../Components/coordinateInput";
+import PlayersInfo from "../../Components/playerInfo";
+import { useNavigate } from 'react-router-dom';
 
 function GameScreen() {
 
-
+  console.log("GameScreen rendered");
   const { nickname } = useParams();
 
   const [playerOne, setPlayerOne] = useState(new Player(nickname, 1));
   const [playerTwo, setplayerTwo] = useState(new Player("BOT", 2));
+
+  const [playerOneWins, setPlayerOneWins] = useState(0);
+  const [playerTwoWins, setplayerTwoWins] = useState(0);
+
+  const [gamesPlayed, setGamesPlayed] = useState(0);
 
   const [firstPlayerBattlefield, setFirstPlayerBattlefield] = useState(new BattleField(11, 11, playerOne));
   const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11, playerTwo));
@@ -169,58 +176,48 @@ function GameScreen() {
     const accurateRowIndex = rowIndex + 1;
     const accurateColumnIndex = columnIndex + 1;
 
-    if(playerBattlefield.user.numberOfUser == 1){
-      setFirstPlayerBattlefield(prevBattlefield => {
-        if (!prevBattlefield) {
-          return prevBattlefield;
-        }
-      
-        const newBattlefield = prevBattlefield.clone();
+    if(playerBattlefield.user.numberOfUser == 2){
+   
+        const newBattlefield = secondPlayerBattlefield.clone();
+    
         newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
-        setPlayerTurn(playerOne)
-        console.log(playerTurn)
-        return newBattlefield;
-      });
-    } else{
-      setSecondPlayerBattlefield(prevBattlefield => {
-        if (!prevBattlefield) {
-          return prevBattlefield;
-        }
-      
-        const newBattlefield = prevBattlefield.clone();
-        newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
+        setSecondPlayerBattlefield(newBattlefield)
         setPlayerTurn(playerTwo)
-        return newBattlefield;
-      });
-    }    
-  };
+      };
+   }   
+
 
   const machinePlay = () => {
-    if (playerTurn.numberOfUser == 2) {
-      setFirstPlayerBattlefield((prevBattlefield) => {
-
-        const validCoordinatesRange = prevBattlefield.getValidCoordinatesRange();
-        const startRow = validCoordinatesRange.startCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
-        const startColumn = parseInt(validCoordinatesRange.startCoordinate.slice(1), 10);
-        const endRow = validCoordinatesRange.endCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
-        const endColumn = parseInt(validCoordinatesRange.endCoordinate.slice(1), 10);
-
-        let randomRow = 0
-        let randomColumn = 0
-
-        while (machineAttackedCoordinates.has(`${randomRow}-${randomColumn}`)) {
-           randomRow = Math.floor(Math.random() * (endRow - startRow + 1)) + startRow;
-           randomColumn = Math.floor(Math.random() * (endColumn - startColumn + 1)) + startColumn;
-        }
+    if (playerTurn.numberOfUser === 2) {
+      // Generate random hit coordinates
+      const validCoordinatesRange = firstPlayerBattlefield.getValidCoordinatesRange();
+      const startRow = validCoordinatesRange.startCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+      const startColumn = parseInt(validCoordinatesRange.startCoordinate.slice(1), 10);
+      const endRow = validCoordinatesRange.endCoordinate.toUpperCase().charCodeAt(0) - 65 + 1;
+      const endColumn = parseInt(validCoordinatesRange.endCoordinate.slice(1), 10);
   
-        // Registra las coordenadas atacadas
-        setMachineAttackedCoordinates((prevCoordinates) => new Set(prevCoordinates.add(`${randomRow}-${randomColumn}`)));
-
-        const newBattlefield = prevBattlefield.clone();
-        newBattlefield.receiveHit(randomRow, randomColumn);
-        setPlayerTurn(playerOne); 
-        return newBattlefield;
-      });
+      let randomRow = 0;
+      let randomColumn = 0;
+  
+      while (machineAttackedCoordinates.has(`${randomRow}-${randomColumn}`)) {
+        randomRow = Math.floor(Math.random() * (endRow - startRow + 1)) + startRow;
+        randomColumn = Math.floor(Math.random() * (endColumn - startColumn + 1)) + startColumn;
+      }
+  
+    
+      const newMachineAttackedCoordinates = new Set(machineAttackedCoordinates);
+      newMachineAttackedCoordinates.add(`${randomRow}-${randomColumn}`);
+      setMachineAttackedCoordinates(newMachineAttackedCoordinates);
+  
+      
+      const newBattlefield = firstPlayerBattlefield.clone();
+      newBattlefield.receiveHit(randomRow, randomColumn);
+  
+      
+      setPlayerTurn(playerOne);
+  
+      
+      setFirstPlayerBattlefield(newBattlefield);
     }
   };
   
@@ -228,19 +225,52 @@ function GameScreen() {
     machinePlay();
   }, [playerTurn]);
   
-  
 
 
   useEffect(() => {
     console.log("secondPlayerBattlefield:", secondPlayerBattlefield);
   }, [secondPlayerBattlefield]);
 
+  useEffect(() => {
+    console.log("fistPlayerBattlefield:", firstPlayerBattlefield);
+  }, [firstPlayerBattlefield]);
+
+  useEffect(() => {
+    console.log("playerTurn:", playerTurn);
+  }, [playerTurn]);
+
+ 
+
+  const reset = () => {
+    if(playerOne.isOutOfCombat){
+      setplayerTwoWins(playerTwoWins + 1)
+    } else {
+      setPlayerOneWins(playerOneWins + 1)
+    }
+    setGamesPlayed(gamesPlayed + 1)
+    setPlacementFase(true);
+    playerOne.isOutOfCombat = false
+    playerTwo.isOutOfCombat = false
+    setFirstPlayerBattlefield(new BattleField(11, 11, playerOne));
+    setSecondPlayerBattlefield(new BattleField(11, 11, playerTwo))
+    setPlacedShipsLength([]);
+    setPlayerTurn(playerOne);
+    setMachineAttackedCoordinates(new Set());
+  };
+
+  const navigate = useNavigate();
+  const toMainMenu = () =>{
+    navigate(`/`);
+  }
 
 
   return (
     <>
       {placementFase ? (
         <>
+          <div>
+            <PlayersInfo playerOneName={playerOne.nickname} playerTwoName={playerTwo.nickname} games={gamesPlayed} winsPlayerOne={playerOneWins} winsPlayerTwo={playerTwoWins}/>
+          </div>
           <h1 className="text-title">SELECT A SHIP</h1>
           <div className="selection-board">
             <ShipSelectionBoard onSelectShip={(ship) => setSelectedShip(ship)} />
@@ -267,7 +297,11 @@ function GameScreen() {
       ) : (
         <>
           {playerOne.isOutOfCombat || playerTwo.isOutOfCombat ? (
+            <>  
              <h1>{playerOne.isOutOfCombat ? playerTwo.nickname.toUpperCase() : playerOne.nickname.toUpperCase()} Wins!</h1>
+             <Button className="button-submit" onClick={reset}>PLAY AGAIN</Button>
+             <Button className="button-submit" onClick={toMainMenu}>MAIN MENU</Button>
+             </>
           ) : (
             <>
               <h1>{playerOne.nickname.toUpperCase()}</h1>

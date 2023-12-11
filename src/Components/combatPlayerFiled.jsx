@@ -21,10 +21,8 @@ function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {
               key={cell.coordinates}
               className={`cell ${getCellStyle(cell, hiddenInfo)}`}
               onClick={() => handleCellClick(rowIndex, columnIndex)}
-              // Deshabilitar clic y hover si es el jugador uno
               style={{ pointerEvents: isSamePlayer ? 'none' : 'auto' }}
             >
-              {/* Omitir las líneas que muestran las coordenadas */}
             </div>
           ))}
         </div>
