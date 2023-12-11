@@ -1,9 +1,9 @@
 export class Ship {
   constructor(length) {
     this.length = length;
-    this.coordinates = []; 
-    this.hit = Array(length).fill(false); 
-    this.sink = false; 
+    this.coordinates = [];
+    this.hit = Array(length).fill(false);
+    this.sink = false;
   }
 
   isSunk() {
@@ -11,21 +11,22 @@ export class Ship {
   }
 
   takeAHit(row, column) {
-    const index =  this.coordinates.findIndex(coord => coord.row === row && coord.column === column);
+    const index = this.coordinates.findIndex(
+      (coord) => coord.row === row && coord.column === column
+    );
 
     if (index !== -1) {
       this.hit[index] = true;
 
-      console.log(this.hit.every(part => part))
-    
-      this.sink = this.hit.every(part => part);
+      console.log(this.hit.every((part) => part));
 
-      return true; 
+      this.sink = this.hit.every((part) => part);
+
+      return true;
     }
 
-    return false; 
+    return false;
   }
-
 
   getHitStatus() {
     return this.hit;
