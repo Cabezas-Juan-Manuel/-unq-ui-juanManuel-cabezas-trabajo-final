@@ -1,7 +1,8 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 import './App.css';
-import Lobby from './Views/lobby//lobby.jsx';
+import Login from './Views/login/login.jsx';
+import Lobby from './Views/lobby/lobby.jsx';
 import GameScreen from './Views/gameScreen/gameScreen.jsx';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +13,8 @@ function App() {
       <BrowserRouter> 
         <Routes>
 
-          <Route exact path="/" element={<Lobby />} />
+          <Route exact path="/" element={<Login />} />
+          <Route exact path="/lobby/:nickname" element={<Lobby />} />  
           <Route exact path="/gameScreen/:nickname" element={<GameScreen />} />          
         </Routes>
       </BrowserRouter> 

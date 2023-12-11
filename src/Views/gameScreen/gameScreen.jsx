@@ -1,15 +1,11 @@
 import React, { useState, useEffect  } from "react";
 import { useParams } from "react-router-dom";
 import { BattleField } from "../../Objects/battlefield";
-import PlayerField from "../../Components/playerField";
-import ShipSelectionBoard from "../../Components/shipSelectionBoard";
 import { Button } from "react-bootstrap";
 import "./gameScreen.css"
 import toastUtil from "../../utilities/toastUtil";
-import {Ship}  from "../../Objects/ship";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
-import CoordinateInput from "../../Components/coordinateInput";
 import PlayersInfo from "../../Components/playerInfo";
 import { useNavigate } from 'react-router-dom';
 import ShipPlacementLogic from "../../Components/shipPlacementLogic";

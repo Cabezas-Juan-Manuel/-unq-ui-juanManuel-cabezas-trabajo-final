@@ -7,14 +7,13 @@ function ButtonStartGame({ nickname }) {
   const navigate = useNavigate();
 
   const handleStartGame = () => {
-    navigate(`/gameScreen/${nickname}`);
-    toastUtil.toastSuccess(`Welcome ${nickname}`);
-    
+    navigate(`/Lobby/${nickname}`);
+    toastUtil.toastSuccess(`Welcome ${nickname}, Choose your game mode`);
   };
 
   return (
     <Button variant="light" onClick={handleStartGame}>
-      Start Game
+      Log In
     </Button>
   );
 }
