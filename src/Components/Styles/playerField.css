@@ -1,25 +1,42 @@
 .battle-field {
-    display: inline-table;
-    grid-template-columns: repeat(11, 1fr);
-    gap: 5px;
-    margin-bottom: 2%;
-    margin-top: 0;
-  }
-  
-  .row {
-    display: flex;
-  }
-  
-  .cell {
-    background-color: white;
-    width: 30px; /* Ajuste el ancho según tus necesidades */
-    height: 30px;
-    border: 1px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .ship {
-    background-color: grey; /* Color de fondo para celdas con barcos */
-  }
+  display: inline-table;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 5px;
+  margin-bottom: 2%;
+  margin-top: 0;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  background-color: white;
+  width: 30px; /* Ajuste el ancho según tus necesidades */
+  height: 30px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ship {
+  background-color: grey; /* Color de fondo para celdas con barcos */
+}
+
+/* Nueva clase para las letras de las filas y columnas */
+.row-column-label {
+  color: black;
+  font-weight: bold; /* Puedes ajustar el peso de la fuente según tus preferencias */
+}
+
+.cell {
+  /* Anula las reglas de hover específicamente para PlayerField */
+  pointer-events: none;
+}
+
+.row-column-label {
+  color: black;
+  font-weight: bold;
+  pointer-events: none;
+}
