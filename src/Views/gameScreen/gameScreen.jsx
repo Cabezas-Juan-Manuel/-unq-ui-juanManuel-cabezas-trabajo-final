@@ -9,6 +9,7 @@ import toastUtil from "../../utilities/toastUtil";
 import { Ship } from "../../Objects/ship";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
+import CoordinateInput from "../../Components/coordinateInput";
 
 function GameScreen() {
 
@@ -246,38 +247,32 @@ function GameScreen() {
           </div>
           <h1 className="text-title">SET COORDINATES</h1>
           <form onSubmit={handleFormSubmit}>
-            <label>
-            Start Coordinate:
-            <input
-              type="text"
+          <CoordinateInput
+              label="Start Coordinate"
               value={startCoordinate}
               placeholder="A1"
-              onChange={(e) => setStartCoordinate(e.target.value)}
+              onChange={setStartCoordinate}
             />
-            </label>
-            <label>
-              End Coordinate:
-                <input
-                type="text"
-                value={endCoordinate}
-                placeholder="A2"
-                onChange={(e) => setEndCoordinate(e.target.value)}
-                />
-            </label>
-               <button type="submit">PLACE SHIP</button>
-            </form>
+          <CoordinateInput
+            label="End Coordinate"
+            value={endCoordinate}
+            placeholder="A2"
+            onChange={setEndCoordinate}
+            />
+           <button className="button-submit" type="submit">PLACE SHIP</button>
+           </form>
           <PlayerField battleField={firstPlayerBattlefield.board} />
-          <Button onClick={finishPlacementFase}>BATTLE!</Button>
+          <Button className="button-submit" onClick={finishPlacementFase}>BATTLE!</Button>
         </>
       ) : (
         <>
           {playerOne.isOutOfCombat || playerTwo.isOutOfCombat ? (
-            <h1>Game Over</h1>
+             <h1>{playerOne.isOutOfCombat ? playerTwo.nickname.toUpperCase() : playerOne.nickname.toUpperCase()} Wins!</h1>
           ) : (
             <>
               <h1>{playerOne.nickname.toUpperCase()}</h1>
               <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
-              <h1>{playerTwo.nickname}</h1>
+              <h1>{playerTwo.nickname.toUpperCase()}</h1>
               <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
             </>
           )}

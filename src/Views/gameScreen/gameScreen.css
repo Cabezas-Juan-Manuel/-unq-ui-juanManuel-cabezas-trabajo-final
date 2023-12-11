@@ -2,3 +2,20 @@
     font-family: "Dhurjati";
     font-size: 3rem;
 }
+
+.button-submit {
+    background-color: #ffffff;
+    color: #000000;
+    border: 0.1rem solid #000000;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.0s, background-color 0.0s;
+  }
+  
+  .button-submit:active {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    background-color: lightblue;
+  }
