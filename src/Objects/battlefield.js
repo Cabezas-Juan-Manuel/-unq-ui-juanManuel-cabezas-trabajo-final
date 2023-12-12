@@ -126,4 +126,8 @@ export class BattleField {
   
     return clonedBattleField;
   }
+
+  isCellClicked(row, column){
+    return this.board[row][column].hit
+  }
 }

@@ -6,6 +6,7 @@ import Lobby from './Views/lobby/lobby.jsx';
 import GameScreen from './Views/gameScreen/gameScreen.jsx';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import PlayerVsPlayerScreen from './Views/playerVsPlayerScreen/playerVsPlayerScreen.jsx';
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
       <BrowserRouter> 
         <Routes>
 
-          <Route exact path="/" element={<Login />} />
+          <Route path="/:nicknameFirstUser?" element={<Login />} />
           <Route exact path="/lobby/:nickname" element={<Lobby />} />  
-          <Route exact path="/gameScreen/:nickname" element={<GameScreen />} />          
+          <Route exact path="/gameScreen/:nickname" element={<GameScreen />} />   
+          <Route path="/playerVsPlayerScreen/:nicknameFirstUser/:nicknameSecondUser" element={<PlayerVsPlayerScreen />} />       
         </Routes>
       </BrowserRouter> 
       <ToastContainer position="top-right"

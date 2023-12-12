@@ -1,28 +1,26 @@
-import React, { useState, useEffect  } from "react";
 import { useParams } from "react-router-dom";
+import React, { useState, useEffect  } from "react";
 import { BattleField } from "../../Objects/battlefield";
 import { Button } from "react-bootstrap";
-import "./gameScreen.css"
+import "../gameScreen/gameScreen.css"
 import toastUtil from "../../utilities/toastUtil";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
 import PlayersInfo from "../../Components/playerInfo";
 import { useNavigate } from 'react-router-dom';
 import ShipPlacementLogic from "../../Components/shipPlacementLogic";
-import { Game } from "../../Objects/game";
 
-function GameScreen() {
-
-  const { nickname } = useParams();
-
-  const [game, setGame] = useState(new Game());
-  const [playerOne, setPlayerOne] = useState(new Player(nickname, 1));
-  const [playerTwo, setplayerTwo] = useState(new Player("BOT", 2));
+function PlayerVsPlayerScreen(){
+  const { nicknameFirstUser, nicknameSecondUser } = useParams();
+   
+  const [playerOne, setPlayerOne] = useState(new Player(nicknameFirstUser, 1));
+  const [playerTwo, setplayerTwo] = useState(new Player(nicknameSecondUser, 2));
 
   const [firstPlayerBattlefield, setFirstPlayerBattlefield] = useState(new BattleField(11, 11, playerOne));
   const [secondPlayerBattlefield, setSecondPlayerBattlefield] = useState(new BattleField(11, 11, playerTwo));
 
   const [placementFase, setPlacementFase] = useState(true);
+  const [placementTurn, setPlacementTurn] = useState(playerOne);
   const [playerTurn, setPlayerTurn] = useState(playerOne);
 
   const [playerOneWins, setPlayerOneWins] = useState(0);
@@ -30,16 +28,27 @@ function GameScreen() {
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
   const finishPlacementFase = (shipsPlaces, battlefield) => {
-    if(shipsPlaces == 4){
-      setFirstPlayerBattlefield(battlefield)
-      let secondBattlefield = game.placeRandomShips(secondPlayerBattlefield)
-      setSecondPlayerBattlefield(secondBattlefield)
-      setPlacementFase(false);
+
+    if(shipsPlaces == 4 && placementTurn == playerOne){
+        setFirstPlayerBattlefield(battlefield)
+        setPlacementTurn(playerTwo)
+        return
     } else{
-      toastUtil.toastError("Place all ships")
+        toastUtil.toastError("place all ships")
+    };
+
+    if (shipsPlaces == 4 && placementTurn == playerTwo){
+      setSecondPlayerBattlefield(battlefield)
+      setPlacementTurn(playerOne)
+      setPlacementFase(false)
+      return
+    } else{
+      toastUtil.toastError("place all ships")
+      return
     }
-    
-  };
+  }
+
+
 
   const handleCellClick = (rowIndex, columnIndex, playerBattlefield) => {
     const accurateRowIndex = rowIndex + 1;
@@ -55,22 +64,20 @@ function GameScreen() {
     
         newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
         setSecondPlayerBattlefield(newBattlefield)
-        setPlayerTurn(playerTwo)
-      };
+        setPlayerTurn(playerTwo, () => {
+          console.log("Player turn changed. Current turn:", playerTwo);
+        });
+        console.log(playerTurn)
+      } else {
+        const newBattlefield = firstPlayerBattlefield.clone();
+    
+        newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
+        setFirstPlayerBattlefield(newBattlefield)
+        setPlayerTurn(playerOne)
+      }
    }   
 
 
-  const machinePlay = () => {
-    if (playerTurn.numberOfUser === 2) {  
-      setFirstPlayerBattlefield(game.attackPlayer(firstPlayerBattlefield));
-      console.log(game.attackedCoordinates)
-      setPlayerTurn(playerOne)
-    }
-  };
-  
-  useEffect(() => {
-    machinePlay();
-  }, [playerTurn]);
   
   const reset = () => {
     if(playerOne.isOutOfCombat){
@@ -78,8 +85,8 @@ function GameScreen() {
     } else {
       setPlayerOneWins(playerOneWins + 1)
     }
+    setPlacementTurn(playerOne)
     setGamesPlayed(gamesPlayed + 1)
-    game.reset()
     setPlacementFase(true);
     playerOne.reset()
     playerTwo.reset()
@@ -99,14 +106,27 @@ function GameScreen() {
     <>
       {placementFase ? (
         <>
-          <div>
-            <PlayersInfo playerOneName={playerOne.nickname} playerTwoName={playerTwo.nickname} games={gamesPlayed} winsPlayerOne={playerOneWins} winsPlayerTwo={playerTwoWins}/>
-          </div>
+        <div>
+          <PlayersInfo playerOneName={playerOne.nickname} playerTwoName={playerTwo.nickname} games={gamesPlayed} winsPlayerOne={playerOneWins} winsPlayerTwo={playerTwoWins}/>
+        </div>
+        {placementTurn === playerOne ? (
+            <>      
+           <h3>{nicknameFirstUser.toUpperCase()}: PLACE YOUR SHIPS</h3>    
           <ShipPlacementLogic
             battlefield={firstPlayerBattlefield}
             finishPlacementFase={finishPlacementFase}
           />
-        </>
+          </>
+        ) : (
+            <>
+           <h3>{nicknameSecondUser.toUpperCase()}: PLACE YOUR SHIPS</h3>  
+            <ShipPlacementLogic
+            battlefield={secondPlayerBattlefield}
+            finishPlacementFase={finishPlacementFase}
+          />
+          </>
+        )}
+      </>
       ) : (
         <>
           {playerOne.isOutOfCombat || playerTwo.isOutOfCombat ? (
@@ -120,14 +140,13 @@ function GameScreen() {
               <h1>{playerOne.nickname.toUpperCase()}</h1>
               <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
               <h1>{playerTwo.nickname.toUpperCase()}</h1>
-              <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
+              <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
             </>
           )}
         </>
       )}
     </>
   );
- 
 }
 
-export default GameScreen;
+export default PlayerVsPlayerScreen

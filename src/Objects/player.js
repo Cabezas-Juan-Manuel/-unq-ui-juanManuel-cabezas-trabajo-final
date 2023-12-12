@@ -24,4 +24,9 @@ export class Player {
         }
 
       }
+
+      reset(){
+        this.fleet = [];
+        this.isOutOfCombat = false;
+      }
 }

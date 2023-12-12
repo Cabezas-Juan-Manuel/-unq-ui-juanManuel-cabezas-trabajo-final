@@ -1,4 +1,4 @@
-/*nunca use esto pero si no lo pongo no esta la img ocmpleta*/
+
 html, body, #root {
     background-color: #3c4c9b;
     display: flex;
@@ -9,32 +9,33 @@ html, body, #root {
     flex-direction: column;
 }
 
-.lobby-container{
-    background-color: #3c4c9b;
+
+.form-container {
     display: flex;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-}
+  }
+
 
 .battleShip-title{
     height: 20%;
     width: 50%;
 }
 
+.secondPlayer-text{
+    font-family: "Dhurjati";
+    font-size: 2rem;
+}
+
 .login-container {
     background-color: gray;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 20%;
     width: 30%;
-    margin-top: 7%;
     border: 5px solid gray;
 }
 

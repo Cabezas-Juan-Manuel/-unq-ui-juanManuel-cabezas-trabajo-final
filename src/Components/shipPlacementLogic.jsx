@@ -78,6 +78,11 @@ const ShipPlacementLogic = ({ battlefield, finishPlacementFase }) => {
     setSelectedShip(null);
   };
 
+  const handleBattleClick = () => {
+    finishPlacementFase(placedShipsLength.length, battlefield);
+    setPlacedShipsLength([]);
+  };
+
   return (
     <>
       <h1 className="text-title">SELECT A SHIP</h1>
@@ -98,7 +103,7 @@ const ShipPlacementLogic = ({ battlefield, finishPlacementFase }) => {
         PLACE SHIP
       </button>
       <PlayerField battleField={battlefield.board} />
-      <Button className="button-submit" onClick={() => finishPlacementFase(placedShipsLength.length, battlefield)}>
+      <Button className="button-submit" onClick={handleBattleClick}>
       BATTLE!
      </Button>
     </>
