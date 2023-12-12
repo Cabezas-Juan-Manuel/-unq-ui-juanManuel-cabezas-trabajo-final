@@ -1,0 +1,11 @@
+.container-counter {
+    display: flex;
+    justify-content: space-between;
+    margin: 45px;
+    flex-direction: row; 
+    align-items: center; 
+  }
+  
+  .container-counter h3 {
+    margin: 0; 
+  }

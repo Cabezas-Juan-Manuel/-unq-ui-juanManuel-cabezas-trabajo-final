@@ -3,15 +3,15 @@ import toastUtil from "../utilities/toastUtil";
 import { Button } from "react-bootstrap";
 import CoordinateInput from "../Components/coordinateInput";
 import PlayerField from "./playerField";
-import {Ship} from "../Objects/ship";
-import ShipSelectionBoard from "./shipSelectionBoard";
+import { Ship } from "../Objects/ship";
+import ShipSelectionBoard from "./shipSelectionBoard"
+import "./Styles/shipPlacementLogic.css"
 
 const ShipPlacementLogic = ({ battlefield, finishPlacementFase }) => {
   const [selectedShip, setSelectedShip] = useState(null);
-  const [startCoordinate, setStartCoordinate] = useState('');
-  const [endCoordinate, setEndCoordinate] = useState('');
+  const [startCoordinate, setStartCoordinate] = useState("");
+  const [endCoordinate, setEndCoordinate] = useState("");
   const [placedShipsLength, setPlacedShipsLength] = useState([]);
-  
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -84,29 +84,36 @@ const ShipPlacementLogic = ({ battlefield, finishPlacementFase }) => {
   };
 
   return (
-    <>
-      <h1 className="text-title">SELECT A SHIP</h1>
-       <ShipSelectionBoard onSelectShip={(ship) => setSelectedShip(ship)} />
-      <CoordinateInput
-        label="Start Coordinate"
-        value={startCoordinate}
-        placeholder="A1"
-        onChange={(value) => setStartCoordinate(value)}
-      />
-      <CoordinateInput
-        label="End Coordinate"
-        value={endCoordinate}
-        placeholder="A2"
-        onChange={(value) => setEndCoordinate(value)}
-      />
-      <button className="button-submit" type="submit" onClick={handleFormSubmit}>
-        PLACE SHIP
-      </button>
-      <PlayerField battleField={battlefield.board} />
+    <div className="ship-placement-container">
+  <div className="ship-selection">
+    <h1 className="text-title">SELECT SHIP</h1>
+    <ShipSelectionBoard onSelectShip={(ship) => setSelectedShip(ship)} />
+  </div>
+  <div className="ship-placement-form">
+  <h1 className="text-title">SET COORDINATES</h1>
+    <CoordinateInput
+      label="Start Coordinate"
+      value={startCoordinate}
+      placeholder="A1"
+      onChange={(value) => setStartCoordinate(value)}
+    />
+    <CoordinateInput
+      label="End Coordinate"
+      value={endCoordinate}
+      placeholder="A2"
+      onChange={(value) => setEndCoordinate(value)}
+    />
+    <button className="button-submit" type="submit" onClick={handleFormSubmit}>
+      PLACE SHIP
+    </button>
+    <PlayerField battleField={battlefield.board} />
+    <div className="button-container">
       <Button className="button-submit" onClick={handleBattleClick}>
-      BATTLE!
-     </Button>
-    </>
+        BATTLE!
+      </Button>
+    </div>
+  </div>
+</div>
   );
 };
 

@@ -98,15 +98,25 @@ function GameScreen() {
   return (
     <>
       {placementFase ? (
-        <>
-          <div>
-            <PlayersInfo playerOneName={playerOne.nickname} playerTwoName={playerTwo.nickname} games={gamesPlayed} winsPlayerOne={playerOneWins} winsPlayerTwo={playerTwoWins}/>
-          </div>
-          <ShipPlacementLogic
-            battlefield={firstPlayerBattlefield}
-            finishPlacementFase={finishPlacementFase}
-          />
-        </>
+          <>
+            <div className="ship-placement-container">
+              <div className="ship-selection">
+                <ShipPlacementLogic
+                  battlefield={firstPlayerBattlefield}
+                  finishPlacementFase={finishPlacementFase}
+                />
+              </div>
+              <div className="counter-container">
+                <PlayersInfo
+                  playerOneName={playerOne.nickname}
+                  playerTwoName={playerTwo.nickname}
+                  games={gamesPlayed}
+                  winsPlayerOne={playerOneWins}
+                  winsPlayerTwo={playerTwoWins}
+                />
+              </div>
+            </div>
+          </>
       ) : (
         <>
           {playerOne.isOutOfCombat || playerTwo.isOutOfCombat ? (
@@ -117,9 +127,9 @@ function GameScreen() {
              </>
           ) : (
             <>
-              <h1>{playerOne.nickname.toUpperCase()}</h1>
+              <h1>{playerOne.nickname.toUpperCase()} FIELD</h1>
               <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
-              <h1>{playerTwo.nickname.toUpperCase()}</h1>
+              <h1>{playerTwo.nickname.toUpperCase()} FIELD</h1>
               <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
             </>
           )}

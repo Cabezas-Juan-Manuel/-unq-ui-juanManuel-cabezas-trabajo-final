@@ -1,49 +1,46 @@
 .board-container {
-    display: flex;
-    justify-content: center; /* Centra los elementos en el eje horizontal */
-  }
-  
-  .ships-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
-  }
-  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.ship-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px; 
+  width: 120px; 
+}
+
+.ship-image {
+  width: 80%; 
+  height: auto;
+  cursor: pointer;
+  margin-bottom: 3px; 
+}
+
+.ship-details {
+  text-align: center;
+}
+
+.ship-name {
+  font-size: 0.8rem; 
+  margin: 0;
+}
+
+.ship-length {
+  font-size: 0.6rem; 
+  margin: 0;
+}
+
+.ship-image:hover {
+  transform: scale(1.1); 
+}
+
+@media (max-width: 600px) {
   .ship-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
-    width: 150px; /* Ajusta el ancho según tus preferencias */
-  }
-  
-  .ship-image {
     width: 100%;
-    height: auto;
-    cursor: pointer;
-    margin-bottom: 5px;
   }
-  
-  .ship-details {
-    text-align: center;
-  }
-  
-  .ship-name {
-    font-size: 1rem;
-    margin: 0;
-  }
-  
-  .ship-length {
-    font-size: 0.8rem;
-    margin: 0;
-  }
-  
-  /* Reglas de medios para hacerlo responsive */
-  @media (max-width: 600px) {
-    .ship-container {
-      width: 100%; /* Ocupa todo el ancho disponible en dispositivos pequeños */
-    }
-  }
-  
+}

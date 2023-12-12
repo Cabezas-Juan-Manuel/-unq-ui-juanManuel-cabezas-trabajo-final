@@ -1,34 +1,23 @@
-
-html, body, #root {
-    background-color: #3c4c9b;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-
 .form-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 20px; /* Agregado margen superior */
   }
-
-
-.battleShip-title{
+  
+  .battleShip-title {
     height: 20%;
     width: 50%;
-}
-
-.secondPlayer-text{
+    margin-bottom: 20px; /* Agregado margen inferior */
+  }
+  
+  .secondPlayer-text {
     font-family: "Dhurjati";
     font-size: 2rem;
-}
-
-.login-container {
+  }
+  
+  .login-container {
     background-color: gray;
     display: flex;
     flex-direction: column;
@@ -37,24 +26,23 @@ html, body, #root {
     height: 20%;
     width: 30%;
     border: 5px solid gray;
-}
-
-.nickName-text{
+  }
+  
+  .nickName-text {
     font-family: "Dhurjati";
     font-size: 1.2rem;
     align-self: flex-start;
-}
-
-.input-nickName {
+  }
+  
+  .input-nickName {
     width: 99%;
     padding: 0;
     margin-bottom: 2%;
     margin-top: 1%;
     font-size: 1.2rem;
     font-family: "Dhurjati";
-}
-
-
-.start-button {
+  }
+  
+  .start-button {
     width: 90%;
-}
+  }

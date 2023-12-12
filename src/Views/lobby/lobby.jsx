@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import './loby.css';
+import toastUtil from '../../utilities/toastUtil';
 
 function Lobby (){
   const { nickname } = useParams();
@@ -13,13 +14,14 @@ function Lobby (){
 
   const handleVsCom = () => {
     navigate(`/gameScreen/${nickname}`);
-  };
+    toastUtil.toastSuccess("Click on a ship to select and set up its coordinates. Get ready!");
+  }
 
   const handleVsPlayer = () => {
     navigate(`/${nickname}`);
   };
 
-
+  
 
   return (
     <div className="game-container-wrapper">

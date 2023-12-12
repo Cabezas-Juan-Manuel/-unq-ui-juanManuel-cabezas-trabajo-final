@@ -4,7 +4,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-
+  background-color: #242495;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -13,7 +13,7 @@
 }
 
 .body-custom {
-  background-color: #202742;
+  background-color: blue;
 }
 
 @media (prefers-color-scheme: light) {

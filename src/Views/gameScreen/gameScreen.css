@@ -19,3 +19,17 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     background-color: lightblue;
   }
+
+  .ship-placement-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  }
+  
+  .ship-placement-container .ship-selection {
+    margin-right: 20px;
+  }
+  
+  .ship-placement-container .counter-container {
+    margin-right: 20px;
+  }
