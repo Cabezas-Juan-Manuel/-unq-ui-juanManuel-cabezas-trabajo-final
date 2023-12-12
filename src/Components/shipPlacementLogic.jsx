@@ -41,8 +41,18 @@ const ShipPlacementLogic = ({ battlefield, finishPlacementFase }) => {
     const adjustedEndRow = endRow + 1;
     const adjustedEndColumn = endColumn + 1;
 
+    if(adjustedStartRow != adjustedEndRow && adjustedStartColumn != adjustedEndColumn){
+      toastUtil.toastError("Ships must be placed horizontally or vertically")
+      return
+    }
+
     if(battlefield.areCoordinatesOutOfRange(adjustedStartRow, adjustedStartColumn, adjustedEndRow, adjustedEndColumn)){
       toastUtil.toastError("Coordinates are out of range")
+      return;
+    }
+
+    if (adjustedStartRow > adjustedEndRow || adjustedStartColumn > adjustedEndColumn) {
+      toastUtil.toastError("Coordinates are inverted.");
       return;
     }
 
