@@ -3,6 +3,7 @@ import React, { useState, useEffect  } from "react";
 import { BattleField } from "../../Objects/battlefield";
 import { Button } from "react-bootstrap";
 import "../gameScreen/gameScreen.css"
+import "./playerVsPlayerScreen.css"
 import toastUtil from "../../utilities/toastUtil";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
@@ -97,26 +98,29 @@ function PlayerVsPlayerScreen(){
     <>
       {placementFase ? (
         <>
-        <div>
-          <PlayersInfo playerOneName={playerOne.nickname} playerTwoName={playerTwo.nickname} games={gamesPlayed} winsPlayerOne={playerOneWins} winsPlayerTwo={playerTwoWins}/>
-        </div>
-        {placementTurn === playerOne ? (
-            <>      
-           <h3>{nicknameFirstUser.toUpperCase()}: PLACE YOUR SHIPS</h3>    
-          <ShipPlacementLogic
-            battlefield={firstPlayerBattlefield}
-            finishPlacementFase={finishPlacementFase}
-          />
-          </>
-        ) : (
-            <>
-           <h3>{nicknameSecondUser.toUpperCase()}: PLACE YOUR SHIPS</h3>  
-            <ShipPlacementLogic
-            battlefield={secondPlayerBattlefield}
-            finishPlacementFase={finishPlacementFase}
-          />
-          </>
-        )}
+        <div className="container">
+  <div className="players-info">
+    <PlayersInfo playerOneName={playerOne.nickname} playerTwoName={playerTwo.nickname} games={gamesPlayed} winsPlayerOne={playerOneWins} winsPlayerTwo={playerTwoWins}/>
+  </div>
+
+  {placementTurn === playerOne ? (
+    <div className="ship-placement">
+      <h3>{nicknameFirstUser.toUpperCase()}: PLACE YOUR SHIPS</h3>
+      <ShipPlacementLogic
+        battlefield={firstPlayerBattlefield}
+        finishPlacementFase={finishPlacementFase}
+      />
+    </div>
+  ) : (
+    <div className="ship-placement">
+      <h3>{nicknameSecondUser.toUpperCase()}: PLACE YOUR SHIPS</h3>
+      <ShipPlacementLogic
+        battlefield={secondPlayerBattlefield}
+        finishPlacementFase={finishPlacementFase}
+      />
+    </div>
+  )}
+</div>
       </>
       ) : (
         <>

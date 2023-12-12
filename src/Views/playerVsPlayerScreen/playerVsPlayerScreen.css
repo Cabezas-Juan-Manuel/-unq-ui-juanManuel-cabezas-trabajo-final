@@ -1,0 +1,26 @@
+/* Agrega este CSS a tu archivo gameScreen.css o crea un nuevo archivo para este componente */
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px; /* Ajusta el margen según sea necesario */
+  }
+  
+  .players-info {
+    width: 30%;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
+    align-items: flex-start;
+    order: 1;
+    margin-top: 5%; /* Ajusta el margen superior en porcentaje */
+  }
+  
+  .ship-placement {
+    width: 60%;
+  }
+  
+  /* Estilos adicionales para alinear el h3 con ShipPlacementLogic */
+  .ship-placement > h3 {
+    margin-left: 10%; /* Ajusta el margen izquierdo en porcentaje */
+  }
