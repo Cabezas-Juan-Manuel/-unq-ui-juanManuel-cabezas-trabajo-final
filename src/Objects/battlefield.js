@@ -70,8 +70,6 @@ export class BattleField {
         this.board[row][column].shipInfo = ship; 
         let shipCoordinates = { row, column };
         ship.coordinates.push(shipCoordinates);
-      } else {
-        console.log('  Coordinates outside the range of the board.');
       }
     }
   
@@ -89,8 +87,6 @@ export class BattleField {
         if(ship.isSunk()){
           this.user.shipSunk(ship)
         }
-      } else {
-        console.log(`Agua en la coordenada: ${this.board[row][column].coordinates}`);
       }
       
       this.board[row][column].hit = true;   

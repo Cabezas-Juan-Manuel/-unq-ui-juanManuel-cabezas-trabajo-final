@@ -144,6 +144,7 @@ function PlayerVsPlayerScreen(){
              </>
           ) : (
             <>
+              <h1>ITS {playerTurn.nickname.toUpperCase()} TURN</h1>
               <h1>{playerOne.nickname.toUpperCase()}</h1>
               <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
               <h1>{playerTwo.nickname.toUpperCase()}</h1>

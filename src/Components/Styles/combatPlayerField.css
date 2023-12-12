@@ -36,3 +36,7 @@
     background-color: red !important;
     color: red !important; /* Use a contrasting color for visibility */
   }
+
+  .Shipsunk {
+    background-color: black !important;
+  }

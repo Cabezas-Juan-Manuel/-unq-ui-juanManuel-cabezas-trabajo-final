@@ -18,8 +18,6 @@ export class Ship {
     if (index !== -1) {
       this.hit[index] = true;
 
-      console.log(this.hit.every((part) => part));
-
       this.sink = this.hit.every((part) => part);
 
       return true;

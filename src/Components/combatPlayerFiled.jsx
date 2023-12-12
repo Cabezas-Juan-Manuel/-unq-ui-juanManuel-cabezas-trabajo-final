@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Styles/combatPlayerField.css';
 
 function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {
-  console.log(player)
   let isSamePlayer = player.numberOfUser == battleField.user.numberOfUser;
 
   const handleCellClick = (rowIndex, columnIndex) => {
@@ -33,15 +32,17 @@ function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {
 
 function getCellStyle(cell, hiddenInfo) {
   let cellStyle = '';
-
-  if (cell.hit && cell.ship) {
+  let isSunk = cell.ship && cell.shipInfo.isSunk()
+  if(isSunk){
+    console.log(isSunk)
+    cellStyle += 'Shipsunk';
+  } else if (cell.hit && cell.ship) {
     cellStyle += 'Shiphit';
   } else if (cell.ship && !hiddenInfo) {
     cellStyle += 'ship';
   } else if (cell.hit && !cell.ship) {
     cellStyle += 'Waterhit';
   }
-
   return cellStyle.trim();
 }
 
