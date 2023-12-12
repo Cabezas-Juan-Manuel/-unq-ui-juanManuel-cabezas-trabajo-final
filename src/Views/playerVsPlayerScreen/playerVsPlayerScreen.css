@@ -1,5 +1,3 @@
-/* Agrega este CSS a tu archivo gameScreen.css o crea un nuevo archivo para este componente */
-
 .container {
     display: flex;
     justify-content: space-between;
@@ -20,7 +18,21 @@
     width: 60%;
   }
   
-  /* Estilos adicionales para alinear el h3 con ShipPlacementLogic */
   .ship-placement > h3 {
-    margin-left: 10%; /* Ajusta el margen izquierdo en porcentaje */
+    margin-left: 10%; 
+  }
+
+  .sign-out-container {
+    position: relative; 
+    margin-top: 2%; 
+    margin-left: 2%; 
+  }
+  
+  .sign-out-button {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
   }

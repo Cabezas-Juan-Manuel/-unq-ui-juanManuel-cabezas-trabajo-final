@@ -33,3 +33,18 @@
   .ship-placement-container .counter-container {
     margin-right: 20px;
   }
+
+  .sign-out-container {
+    position: relative; 
+    margin-top: 2%; 
+    margin-left: 2%; 
+  }
+  
+  .sign-out-button {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }

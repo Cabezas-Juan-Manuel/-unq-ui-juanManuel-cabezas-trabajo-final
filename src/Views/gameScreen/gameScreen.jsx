@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom";
 import { BattleField } from "../../Objects/battlefield";
 import { Button } from "react-bootstrap";
 import "./gameScreen.css"
-import toastUtil from "../../utilities/toastUtil";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
 import PlayersInfo from "../../Components/playerInfo";
 import { useNavigate } from 'react-router-dom';
 import ShipPlacementLogic from "../../Components/shipPlacementLogic";
 import { Game } from "../../Objects/game";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function GameScreen() {
 
@@ -88,12 +89,22 @@ function GameScreen() {
 
   const navigate = useNavigate();
   const toMainMenu = () =>{
+    navigate(`/Lobby/${nickname}`);
+  }
+
+  const signOut = () =>{
     navigate(`/`);
   }
 
 
   return (
     <>
+      <div className="sign-out-container">
+        <button className="sign-out-button" onClick={signOut}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          <span> Sign Out</span>
+        </button>
+      </div>
       {placementFase ? (
           <>
             <div className="ship-placement-container">

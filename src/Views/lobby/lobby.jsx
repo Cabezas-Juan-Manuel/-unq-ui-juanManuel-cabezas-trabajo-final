@@ -24,6 +24,7 @@ function Lobby (){
   
 
   return (
+    <>
     <div className="game-container-wrapper">
       <div className="game-container">
         <h1 className='title-text'>GAME OPTIONS</h1>
@@ -32,6 +33,7 @@ function Lobby (){
         <button className='option-text' onClick = {handleLogOut}>LOG OUT</button>
       </div>
     </div>
+    </>
   );
 };
 

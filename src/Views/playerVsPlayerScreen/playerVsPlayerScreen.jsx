@@ -3,13 +3,14 @@ import React, { useState, useEffect  } from "react";
 import { BattleField } from "../../Objects/battlefield";
 import { Button } from "react-bootstrap";
 import "../gameScreen/gameScreen.css"
-import "./playerVsPlayerScreen.css"
-import toastUtil from "../../utilities/toastUtil";
+import "./playerVsPlayerScreen.css";
 import CombatPlayerField from "../../Components/combatPlayerFiled";
 import { Player } from "../../Objects/player";
 import PlayersInfo from "../../Components/playerInfo";
 import { useNavigate } from 'react-router-dom';
 import ShipPlacementLogic from "../../Components/shipPlacementLogic";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function PlayerVsPlayerScreen(){
   const { nicknameFirstUser, nicknameSecondUser } = useParams();
@@ -89,13 +90,24 @@ function PlayerVsPlayerScreen(){
   };
 
   const navigate = useNavigate();
+
   const toMainMenu = () =>{
+    navigate(`/Lobby/${nicknameFirstUser}`);
+  }
+
+  const signOut = () =>{
     navigate(`/`);
   }
 
 
   return (
     <>
+    <div className="sign-out-container">
+        <button className="sign-out-button" onClick={signOut}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          <span> Sign Out</span>
+        </button>
+      </div>
       {placementFase ? (
         <>
         <div className="container">
@@ -133,9 +145,9 @@ function PlayerVsPlayerScreen(){
           ) : (
             <>
               <h1>{playerOne.nickname.toUpperCase()}</h1>
-              <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
+              <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
               <h1>{playerTwo.nickname.toUpperCase()}</h1>
-              <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={false} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
+              <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
             </>
           )}
         </>
