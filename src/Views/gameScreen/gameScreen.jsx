@@ -10,7 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import ShipPlacementLogic from "../../Components/shipPlacementLogic";
 import { Game } from "../../Objects/game";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { toast } from "react-toastify";
+import toastUtil from "../../utilities/toastUtil";
 
 function GameScreen() {
 
@@ -30,12 +32,15 @@ function GameScreen() {
   const [playerTwoWins, setplayerTwoWins] = useState(0);
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
+  const [infoVisible, setInfoVisible] = useState(false);
+
   const finishPlacementFase = (battlefield) => {
       setFirstPlayerBattlefield(battlefield)
       let secondBattlefield = game.placeRandomShips(secondPlayerBattlefield)
       console.log(firstPlayerBattlefield)
       setSecondPlayerBattlefield(secondBattlefield)
       setPlacementFase(false);
+      toastUtil.toastSuccess(`Player ${nickname} has the first turn!`);
     }
     
 
@@ -96,17 +101,42 @@ function GameScreen() {
     navigate(`/`);
   }
 
+  const handleInfoHover = () => {
+    setInfoVisible(true);
+  }
+
+  const handleInfoLeave = () => {
+    setInfoVisible(false);
+  }
+
 
   return (
     <>
       <div className="sign-out-container">
         <button className="sign-out-button" onClick={signOut}>
           <FontAwesomeIcon icon={faSignOutAlt} />
-          <span> Sign Out</span>
+          <span>Log Out</span>
         </button>
       </div>
       {placementFase ? (
           <>
+            <div
+              className="info-container"
+              onMouseEnter={handleInfoHover}
+              onMouseLeave={handleInfoLeave}>
+              <FontAwesomeIcon
+                icon={faInfoCircle}
+                className={`info-icon ${infoVisible ? "visible" : ""}`}
+              />
+              {infoVisible && (
+                <div className="info-tooltip">
+                {/* Contenido del tutorial */}
+                <p>To place a ship on the battlefield, click on the desired ship, then select the starting and ending coordinates. 
+                  Afterward, click the 'Place Ship' button. Remember to set only one ship per type. 
+                  Once you finish placing them, click the 'Battle!' button to start the game.</p>
+                </div>
+              )}
+            </div> 
             <div className="ship-placement-container">
               <div className="ship-selection">
                 <ShipPlacementLogic

@@ -48,3 +48,17 @@
     display: flex;
     align-items: center;
   }
+
+  .info-container {
+    position: absolute;
+    margin-top: 2%; 
+    margin-left: 80%; 
+  }
+
+  .info-icon {
+    font-size: 2rem; /* ajusta el tamaño según tus preferencias */
+    cursor: pointer;
+  }
+
+
+  

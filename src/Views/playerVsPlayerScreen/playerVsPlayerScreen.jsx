@@ -105,7 +105,7 @@ function PlayerVsPlayerScreen(){
     <div className="sign-out-container">
         <button className="sign-out-button" onClick={signOut}>
           <FontAwesomeIcon icon={faSignOutAlt} />
-          <span> Sign Out</span>
+          <span> Log Out</span>
         </button>
       </div>
       {placementFase ? (
