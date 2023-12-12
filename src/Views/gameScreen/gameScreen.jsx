@@ -29,17 +29,14 @@ function GameScreen() {
   const [playerTwoWins, setplayerTwoWins] = useState(0);
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
-  const finishPlacementFase = (shipsPlaces, battlefield) => {
-    if(shipsPlaces == 4){
+  const finishPlacementFase = (battlefield) => {
       setFirstPlayerBattlefield(battlefield)
       let secondBattlefield = game.placeRandomShips(secondPlayerBattlefield)
+      console.log(firstPlayerBattlefield)
       setSecondPlayerBattlefield(secondBattlefield)
       setPlacementFase(false);
-    } else{
-      toastUtil.toastError("Place all ships")
     }
     
-  };
 
   const handleCellClick = (rowIndex, columnIndex, playerBattlefield) => {
     const accurateRowIndex = rowIndex + 1;

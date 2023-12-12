@@ -79,8 +79,13 @@ const ShipPlacementLogic = ({ battlefield, finishPlacementFase }) => {
   };
 
   const handleBattleClick = () => {
-    finishPlacementFase(placedShipsLength.length, battlefield);
-    setPlacedShipsLength([]);
+    if(placedShipsLength.length == 4){
+      finishPlacementFase(battlefield);
+      setPlacedShipsLength([])
+    } else {
+      toastUtil.toastError("place all ships")
+    }
+    ;
   };
 
   return (

@@ -27,27 +27,18 @@ function PlayerVsPlayerScreen(){
   const [playerTwoWins, setplayerTwoWins] = useState(0);
   const [gamesPlayed, setGamesPlayed] = useState(0);
 
-  const finishPlacementFase = (shipsPlaces, battlefield) => {
+  const finishPlacementFase = (battlefield) => {
 
-    if(shipsPlaces == 4 && placementTurn == playerOne){
+    if(placementTurn == playerOne){
         setFirstPlayerBattlefield(battlefield)
         setPlacementTurn(playerTwo)
-        return
-    } else{
-        toastUtil.toastError("place all ships")
-    };
-
-    if (shipsPlaces == 4 && placementTurn == playerTwo){
+       
+    } else {
       setSecondPlayerBattlefield(battlefield)
       setPlacementTurn(playerOne)
       setPlacementFase(false)
-      return
-    } else{
-      toastUtil.toastError("place all ships")
-      return
     }
   }
-
 
 
   const handleCellClick = (rowIndex, columnIndex, playerBattlefield) => {
