@@ -93,8 +93,6 @@ export class BattleField {
   
       return this;
     } else {
-      console.log('Coordenadas fuera del rango del tablero.');
-    
       return this;
     }
   }

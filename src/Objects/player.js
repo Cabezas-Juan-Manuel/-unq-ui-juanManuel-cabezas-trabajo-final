@@ -13,7 +13,6 @@ export class Player {
     shipSunk(ship) {
         const lengthToRemove = ship.length;
         
-        // Find the index of the ship with the same length in the fleet
         const index = this.fleet.findIndex((s) => s.length === lengthToRemove);
         if (index !== -1) {
           

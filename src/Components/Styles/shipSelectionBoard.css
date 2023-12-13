@@ -38,9 +38,3 @@
 .ship-image:hover {
   transform: scale(1.1); 
 }
-
-@media (max-width: 600px) {
-  .ship-container {
-    width: 100%;
-  }
-}

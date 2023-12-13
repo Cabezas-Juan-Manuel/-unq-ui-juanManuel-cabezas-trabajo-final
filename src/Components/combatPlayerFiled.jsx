@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import './Styles/combatPlayerField.css';
 
 function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {

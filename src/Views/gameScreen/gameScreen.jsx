@@ -11,8 +11,8 @@ import ShipPlacementLogic from "../../Components/shipPlacementLogic";
 import { Game } from "../../Objects/game";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { toast } from "react-toastify";
 import toastUtil from "../../utilities/toastUtil";
+import GameInfo from "../../Components/gameInfo";
 
 function GameScreen() {
 
@@ -120,22 +120,8 @@ function GameScreen() {
       </div>
       {placementFase ? (
           <>
-            <div
-              className="info-container"
-              onMouseEnter={handleInfoHover}
-              onMouseLeave={handleInfoLeave}>
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className={`info-icon ${infoVisible ? "visible" : ""}`}
-              />
-              {infoVisible && (
-                <div className="info-tooltip">
-                {/* Contenido del tutorial */}
-                <p>To place a ship on the battlefield, click on the desired ship, then select the starting and ending coordinates. 
-                  Afterward, click the 'Place Ship' button. Remember to set only one ship per type. 
-                  Once you finish placing them, click the 'Battle!' button to start the game.</p>
-                </div>
-              )}
+            <div className="info-container">
+              <GameInfo/>
             </div> 
             <div className="ship-placement-container">
               <div className="ship-selection">

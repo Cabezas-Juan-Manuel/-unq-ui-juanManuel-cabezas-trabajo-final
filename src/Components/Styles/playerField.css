@@ -12,7 +12,7 @@
 
 .cell {
   background-color: white;
-  width: 30px; /* Ajuste el ancho según tus necesidades */
+  width: 30px;
   height: 30px;
   border: 1px solid #000;
   display: flex;
@@ -21,17 +21,16 @@
 }
 
 .ship {
-  background-color: grey; /* Color de fondo para celdas con barcos */
+  background-color: grey; 
 }
 
-/* Nueva clase para las letras de las filas y columnas */
+
 .row-column-label {
   color: black;
-  font-weight: bold; /* Puedes ajustar el peso de la fuente según tus preferencias */
+  font-weight: bold; 
 }
 
 .cell {
-  /* Anula las reglas de hover específicamente para PlayerField */
   pointer-events: none;
 }
 

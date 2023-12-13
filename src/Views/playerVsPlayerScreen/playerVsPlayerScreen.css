@@ -2,16 +2,16 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin: 20px; /* Ajusta el margen según sea necesario */
+    margin: 20px; 
   }
   
   .players-info {
     width: 30%;
     display: flex;
-    flex-direction: column; /* Alinea los elementos en columna */
+    flex-direction: column; 
     align-items: flex-start;
     order: 1;
-    margin-top: 5%; /* Ajusta el margen superior en porcentaje */
+    margin-top: 5%; 
   }
   
   .ship-placement {

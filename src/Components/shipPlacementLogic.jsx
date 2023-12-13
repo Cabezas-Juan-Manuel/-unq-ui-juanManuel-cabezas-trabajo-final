@@ -3,7 +3,6 @@ import toastUtil from "../utilities/toastUtil";
 import { Button } from "react-bootstrap";
 import CoordinateInput from "../Components/coordinateInput";
 import PlayerField from "./playerField";
-import { Ship } from "../Objects/ship";
 import ShipSelectionBoard from "./shipSelectionBoard"
 import "./Styles/shipPlacementLogic.css"
 
