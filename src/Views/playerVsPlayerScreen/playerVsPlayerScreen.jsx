@@ -58,9 +58,7 @@ function PlayerVsPlayerScreen(){
         newBattlefield.receiveHit(accurateRowIndex, accurateColumnIndex);
         setSecondPlayerBattlefield(newBattlefield)
         setPlayerTurn(playerTwo, () => {
-          console.log("Player turn changed. Current turn:", playerTwo);
         });
-        console.log(playerTurn)
       } else {
         const newBattlefield = firstPlayerBattlefield.clone();
     
@@ -145,9 +143,9 @@ function PlayerVsPlayerScreen(){
           ) : (
             <>
               <h1>ITS {playerTurn.nickname.toUpperCase()} TURN</h1>
-              <h1>{playerOne.nickname.toUpperCase()}</h1>
+              <h1>{playerOne.nickname.toUpperCase()} FIELD</h1>
               <CombatPlayerField battleField={firstPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, firstPlayerBattlefield)} player={playerTurn} />
-              <h1>{playerTwo.nickname.toUpperCase()}</h1>
+              <h1>{playerTwo.nickname.toUpperCase()} FIELD</h1>
               <CombatPlayerField battleField={secondPlayerBattlefield} hiddenInfo={true} onCellClick={(rowIndex, columnIndex) => handleCellClick(rowIndex, columnIndex, secondPlayerBattlefield)} player={playerTurn} />
             </>
           )}

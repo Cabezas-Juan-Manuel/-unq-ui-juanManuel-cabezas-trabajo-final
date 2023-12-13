@@ -37,7 +37,6 @@ function GameScreen() {
   const finishPlacementFase = (battlefield) => {
       setFirstPlayerBattlefield(battlefield)
       let secondBattlefield = game.placeRandomShips(secondPlayerBattlefield)
-      console.log(firstPlayerBattlefield)
       setSecondPlayerBattlefield(secondBattlefield)
       setPlacementFase(false);
       toastUtil.toastSuccess(`Player ${nickname} has the first turn!`);
@@ -66,7 +65,6 @@ function GameScreen() {
   const machinePlay = () => {
     if (playerTurn.numberOfUser === 2) {  
       setFirstPlayerBattlefield(game.attackPlayer(firstPlayerBattlefield));
-      console.log(game.attackedCoordinates)
       setPlayerTurn(playerOne)
     }
   };
