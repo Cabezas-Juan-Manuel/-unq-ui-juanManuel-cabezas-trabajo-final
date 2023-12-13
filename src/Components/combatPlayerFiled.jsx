@@ -18,7 +18,7 @@ function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {
           {row.slice(1).map((cell, columnIndex) => (
             <div
               key={cell.coordinates}
-              className={`cell ${getCellStyle(cell, hiddenInfo)}`}
+              className={`cell-base ${getCellStyle(cell, hiddenInfo)}`}
               onClick={() => handleCellClick(rowIndex, columnIndex)}
               style={{ pointerEvents: isSamePlayer ? 'none' : 'auto' }}
             >
@@ -31,19 +31,21 @@ function CombatPlayerField({ battleField, hiddenInfo, onCellClick, player }) {
 }
 
 function getCellStyle(cell, hiddenInfo) {
-  let cellStyle = '';
-  let isSunk = cell.ship && cell.shipInfo.isSunk()
-  if(isSunk){
-    console.log(isSunk)
-    cellStyle += 'Shipsunk';
+  let cellClasses = '';
+
+  let isSunk = cell.ship && cell.shipInfo.isSunk();
+
+  if (isSunk) {
+    cellClasses += ' ship-sunk';
   } else if (cell.hit && cell.ship) {
-    cellStyle += 'Shiphit';
+    cellClasses += ' ship-hit';
   } else if (cell.ship && !hiddenInfo) {
-    cellStyle += 'ship';
+    cellClasses += ' ship';
   } else if (cell.hit && !cell.ship) {
-    cellStyle += 'Waterhit';
+    cellClasses += ' water-hit';
   }
-  return cellStyle.trim();
+
+  return cellClasses.trim();
 }
 
 export default CombatPlayerField;

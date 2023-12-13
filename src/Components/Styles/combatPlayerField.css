@@ -1,42 +1,41 @@
 .battle-field {
-    grid-template-columns: repeat(11, 1fr);
-    gap: 5px;
-    margin-bottom: 2%;
-    margin-top: 0;
-  }
-  
-  .row {
-    display: flex;
-  }
-  
-  .cell {
-    background-color: white;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease; /* Transición suave del cambio de color */
-  }
-  
-  .cell:hover {
-    background-color: lightblue; /* Cambio de color al pasar el mouse */
-  }
-  
-  .ship {
-    background-color: grey;
-  }
-    
-  .Waterhit {
-    background-color: blue!important;
-  }
-  
-  .Shiphit {
-    background-color: red !important;
-    color: red !important; /* Use a contrasting color for visibility */
-  }
+  grid-template-columns: repeat(11, 1fr);
+  gap: 5px;
+  margin-bottom: 2%;
+  margin-top: 0;
+}
 
-  .Shipsunk {
-    background-color: black !important;
-  }
+.row {
+  display: flex;
+}
+
+.cell-base {
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.cell-base:hover {
+  background-color: lightblue;
+}
+
+.ship {
+  background-color: grey;
+}
+
+.water-hit {
+  background-color: blue;
+}
+
+.ship-hit {
+  background-color: red;
+}
+
+.ship-sunk {
+  background-color: black;
+}

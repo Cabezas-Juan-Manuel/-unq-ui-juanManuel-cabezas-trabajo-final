@@ -7,13 +7,16 @@ function ButtonStartGame({ nickname, secondUserNickname }) {
   const navigate = useNavigate();
 
   const handleStartGame = () => {
+    if (!nickname){
+      toastUtil.toastError("Enter a Nickname")
+      return
+    }
     const destination = secondUserNickname
       ? `/playerVsPlayerScreen/${nickname}/${secondUserNickname}`
       : `/Lobby/${nickname}`;
 
     navigate(destination);
-
-    // Mostrar el toast solo cuando se redirige al lobby
+   
     if (!secondUserNickname) {
       toastUtil.toastSuccess(`Welcome ${nickname}, Choose your game mode`);
     }
